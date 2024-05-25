@@ -1,8 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <QObject>
+#include <QGraphicsView>
+#include <QGraphicsScene>
 #include <QTimer>
+#include <QObject>
+
+class MouseMove;
 
 class Game: public QObject{
     Q_OBJECT
