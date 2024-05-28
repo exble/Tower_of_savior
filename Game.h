@@ -6,17 +6,26 @@
 #include <QTimer>
 #include <QObject>
 
-class MouseMove;
+class CheckBoard;
+class Object;
+
 
 class Game: public QObject{
     Q_OBJECT
 public:
-    void start();
     Game() = default;
-    const QTimer &getTick() const;
+    void start();
+    QTimer* getTick() const;
+    QGraphicsScene *getScene() const;
+    QGraphicsView *getView() const;
+    QList<Object*> Object_list;
 
 private:
-    QTimer tick;
+    QTimer* tick;
+    QGraphicsScene* scene;
+    QGraphicsView* view;
+    CheckBoard* board;
+
 
 private slots:
     void update();

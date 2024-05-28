@@ -1,0 +1,44 @@
+<RCC>
+    <qresource prefix="/character">
+        <file>dataset/character/ID1.png</file>
+        <file>dataset/character/ID2.png</file>
+        <file>dataset/character/ID3.png</file>
+        <file>dataset/character/ID4.png</file>
+        <file>dataset/character/ID5.png</file>
+    </qresource>
+    <qresource prefix="/enemy">
+        <file>dataset/enemy/96n.png</file>
+        <file>dataset/enemy/98n.png</file>
+        <file>dataset/enemy/100n.png</file>
+        <file>dataset/enemy/102n.png</file>
+        <file>dataset/enemy/104n.png</file>
+        <file>dataset/enemy/180n.png</file>
+        <file>dataset/enemy/267n.png</file>
+    </qresource>
+    <qresource prefix="/runestone">
+        <file>dataset/runestone/burning_dark_stone.png</file>
+        <file>dataset/runestone/burning_fire_stone.png</file>
+        <file>dataset/runestone/burning_heart_stone.png</file>
+        <file>dataset/runestone/burning_light_stone.png</file>
+        <file>dataset/runestone/burning_water_stone.png</file>
+        <file>dataset/runestone/dark_stone.png</file>
+        <file>dataset/runestone/earth_stone.png</file>
+        <file>dataset/runestone/fire_stone.png</file>
+        <file>dataset/runestone/heart_stone.png</file>
+        <file>dataset/runestone/light_stone.png</file>
+        <file>dataset/runestone/water_stone.png</file>
+        <file>dataset/runestone/weathered_dark_stone.png</file>
+        <file>dataset/runestone/weathered_earth_stone.png</file>
+        <file>dataset/runestone/weathered_fire_stone.png</file>
+        <file>dataset/runestone/weathered_heart_stone.png</file>
+        <file>dataset/runestone/weathered_light_stone.png</file>
+        <file>dataset/runestone/weathered_water_stone.png</file>
+        <file>dataset/runestone/burning_earth_stone.png</file>
+    </qresource>
+    <qresource prefix="/other">
+        <file>dataset/other/bullet.png</file>
+        <file>dataset/other/select0.png</file>
+        <file>dataset/other/select1.png</file>
+        <file>dataset/other/select2.png</file>
+    </qresource>
+</RCC>

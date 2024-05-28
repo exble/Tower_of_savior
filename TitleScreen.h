@@ -1,4 +1,0 @@
-#ifndef TITLESCREEN_H
-#define TITLESCREEN_H
-
-#endif // TITLESCREEN_H
