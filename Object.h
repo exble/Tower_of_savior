@@ -21,7 +21,7 @@ private:
     void update_handler();
 private:
     bool delete_flag;
-    qreal m_vx, m_vy;
+    qreal m_vx = 0, m_vy = 0;
 #if DEBUG_REMOVE
     std::string name;
 #endif // DEBUG_REMOVE

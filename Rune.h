@@ -11,6 +11,7 @@ public:
     RuneState getState() const;
 
 private:
+    void update();
     RuneType type;
     RuneState state;
 };

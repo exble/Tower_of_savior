@@ -55,7 +55,7 @@ void Object::setVy(qreal _vy)
 
 void Object::move()
 {
-    setPos(x() + vx(),y() + vy());
+    setPos(x() + vx(), y() + vy());
 }
 
 // this function will run for every tick

@@ -18,16 +18,21 @@
 #define RUNE_HEIGHT 90
 #define RUNE_WIDTH 90
 
+#define RUNE_GRAVITY_ACCELERATION 3
+
 #define DUMMY_OPACITY 0.7
 #define DUMMY_INACTIVE_OPACITY 0
 #define RUNE_OPACITY 0.3
+
+//300ms
+#define LINKING_CD 300
 
 #define BOARD_Z_VALUE -100
 
 
 
 // debug settings
-#define DEBUG_REMOVE 0
-#define DEBUG_MOUSE 1
+#define DEBUG_REMOVE 1
+#define DEBUG_MOUSE 0
 
 #endif // PARAM_H

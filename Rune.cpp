@@ -59,6 +59,8 @@ Rune::Rune(RuneType type, RuneState state)
             setPixmap(QPixmap(":/runestone/dataset/runestone/burning_water_stone.png"));
         }
         break;
+    default:
+        break;
     }
 }
 
@@ -70,4 +72,9 @@ RuneType Rune::getType() const
 RuneState Rune::getState() const
 {
     return state;
+}
+
+void Rune::update()
+{
+    move();
 }
