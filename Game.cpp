@@ -1,7 +1,8 @@
 #include "Game.h"
 #include "param.h"
 #include "Object.h"
-#include "CheckBoard.h"
+#include "RuneBoard.h"
+#include "MouseMove.h"
 
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
@@ -25,9 +26,14 @@ void Game::start()
     tick->start(1000.0/TICK_PER_SEC);
     connect(tick, SIGNAL(timeout()), this, SLOT(update()));
 
-    // init board
-    board = new CheckBoard();
-    board->placeBoard();
+    // init MouseMove
+    mousemove = new MouseMove();
+
+    // init rune board
+    board = new RuneBoard();
+
+
+
 }
 
 void Game::update()

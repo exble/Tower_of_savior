@@ -11,22 +11,22 @@ CheckBoard::CheckBoard()
     QColor color;
     QBrush brush;
     //row major
-    for(int i = 0; i < 5; i++){
-        for(int j = 0; j < 6; j++){
+    for(int i = 0; i < RUNE_COUNT_Y; i++){
+        for(int j = 0; j < RUNE_COUNT_X; j++){
             QGraphicsRectItem* tile = new QGraphicsRectItem();
             tile->setRect(RUNE_AREA_X + j*RUNE_WIDTH, RUNE_AREA_Y + i*RUNE_HEIGHT, RUNE_WIDTH, RUNE_HEIGHT);
             if((i+j)%2){
-                // dark
-                color.setRgb(30, 20, 10);
-            }
-            else{
                 // bright
                 color.setRgb(57, 37, 21);
+            }
+            else{
+                // dark
+                color.setRgb(30, 20, 10);
             }
             brush.setStyle(Qt::SolidPattern);
             brush.setColor(color);
             tile->setBrush(brush);
-            tile->setZValue(-100);
+            tile->setZValue(BOARD_Z_VALUE);
             tiles.push_back(tile);
         }
     }

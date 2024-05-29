@@ -30,6 +30,34 @@ void Object::remove()
     delete_flag = true;
 }
 
+qreal Object::vx() const
+{
+    return m_vx;
+}
+
+// Down is positive
+qreal Object::vy() const
+{
+    return m_vy;
+}
+
+void Object::setVx(qreal _vx)
+{
+    m_vx = _vx;
+}
+
+
+// Down is positive
+void Object::setVy(qreal _vy)
+{
+    m_vy = _vy;
+}
+
+void Object::move()
+{
+    setPos(x() + vx(),y() + vy());
+}
+
 // this function will run for every tick
 void Object::update()
 {

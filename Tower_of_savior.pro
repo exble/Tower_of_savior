@@ -11,17 +11,23 @@ CONFIG += c++11
 SOURCES += \
     CheckBoard.cpp \
     Game.cpp \
+    MouseListener.cpp \
+    MouseMove.cpp \
     Object.cpp \
     Rune.cpp \
-    RuneArea.cpp \
+    RuneBoard.cpp \
+    TitleScreen.cpp \
     main.cpp
 
 HEADERS += \
     CheckBoard.h \
     Game.h \
+    MouseListener.h \
+    MouseMove.h \
     Object.h \
     Rune.h \
-    RuneArea.h \
+    RuneBoard.h \
+    TitleScreen.h \
     enum.h \
     param.h
 

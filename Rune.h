@@ -7,9 +7,12 @@
 class Rune : public Object{
 public:
     Rune(RuneType type, RuneState state);
+    RuneType getType() const;
+    RuneState getState() const;
+
 private:
-    bool is_stone;
-    bool is_burning;
+    RuneType type;
+    RuneState state;
 };
 
 #endif // RUNE_H

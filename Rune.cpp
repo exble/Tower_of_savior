@@ -1,6 +1,7 @@
 #include "Rune.h"
 
 Rune::Rune(RuneType type, RuneState state)
+    :type(type), state(state)
 {
     switch (type) {
     case RuneType::fire:
@@ -59,4 +60,14 @@ Rune::Rune(RuneType type, RuneState state)
         }
         break;
     }
+}
+
+RuneType Rune::getType() const
+{
+    return type;
+}
+
+RuneState Rune::getState() const
+{
+    return state;
 }
