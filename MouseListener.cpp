@@ -5,12 +5,12 @@ extern Game* game;
 
 MouseListener::MouseListener()
 {
-    game->Listener_list.push_back(this);
+    game->MouseListeners.push_back(this);
 }
 
 MouseListener::~MouseListener()
 {
-    game->Listener_list.removeOne(this);
+    game->MouseListeners.removeOne(this);
 }
 
 void MouseListener::MousePressEvent(const QGraphicsSceneMouseEvent *event)

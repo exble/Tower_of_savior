@@ -59,6 +59,17 @@ Rune::Rune(RuneType type, RuneState state)
             setPixmap(QPixmap(":/runestone/dataset/runestone/burning_water_stone.png"));
         }
         break;
+    case RuneType::dark:
+        if(state == RuneState::normal){
+            setPixmap(QPixmap(":/runestone/dataset/runestone/dark_stone.png"));
+        }
+        else if(state == RuneState::weathered){
+            setPixmap(QPixmap(":/runestone/dataset/runestone/weathered_dark_stone.png"));
+        }
+        else if(state == RuneState::burning){
+            setPixmap(QPixmap(":/runestone/dataset/runestone/burning_dark_stone.png"));
+        }
+        break;
     default:
         break;
     }

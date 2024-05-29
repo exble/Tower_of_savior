@@ -17,7 +17,7 @@ MouseMove::MouseMove()
 
 void MouseMove::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    foreach(MouseListener* listener, game->Listener_list){
+    foreach(MouseListener* listener, game->MouseListeners){
         listener->MousePressEvent(event);
     }
 #if DEBUG_MOUSE
@@ -28,7 +28,7 @@ void MouseMove::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void MouseMove::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    foreach(MouseListener* listener, game->Listener_list){
+    foreach(MouseListener* listener, game->MouseListeners){
         listener->MouseReleaseEvent(event);
     }
 #if DEBUG_MOUSE
@@ -39,7 +39,7 @@ void MouseMove::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void MouseMove::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    foreach(MouseListener* listener, game->Listener_list){
+    foreach(MouseListener* listener, game->MouseListeners){
         listener->MouseMoveEvent(event);
     }
 #if DEBUG_MOUSE

@@ -16,6 +16,8 @@ SOURCES += \
     Object.cpp \
     Rune.cpp \
     RuneBoard.cpp \
+    StatusBar.cpp \
+    TickListener.cpp \
     TitleScreen.cpp \
     main.cpp
 
@@ -27,6 +29,8 @@ HEADERS += \
     Object.h \
     Rune.h \
     RuneBoard.h \
+    StatusBar.h \
+    TickListener.h \
     TitleScreen.h \
     enum.h \
     param.h

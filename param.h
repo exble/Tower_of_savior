@@ -32,7 +32,7 @@
 
 
 // debug settings
-#define DEBUG_REMOVE 1
+#define DEBUG_REMOVE 0
 #define DEBUG_MOUSE 0
 
 #endif // PARAM_H

@@ -38,9 +38,9 @@ void Game::start()
 
 void Game::update()
 {
-    // update all objects
-    foreach(Object* obj, Object_list){
-        obj->update_handler();
+    // update all TickListeners
+    foreach(TickListener* tick_reader, TickListeners){
+        tick_reader->update_handler();
     }
 }
 

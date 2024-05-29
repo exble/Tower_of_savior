@@ -9,6 +9,7 @@
 class RuneBoard;
 class Object;
 class MouseListener;
+class TickListener;
 class MouseMove;
 
 class Game: public QObject{
@@ -20,7 +21,8 @@ public:
     QGraphicsScene* getScene() const;
     QGraphicsView* getView() const;
     QList<Object*> Object_list;
-    QList<MouseListener*> Listener_list;
+    QList<MouseListener*> MouseListeners;
+    QList<TickListener*> TickListeners;
 
 private:
     QTimer* tick;

@@ -190,7 +190,6 @@ void RuneBoard::makeCluster()
             clusters.push_back(cluster);
         }
     }
-    qDebug() << "Number of cluster is " << clusters.size();
 }
 
 void RuneBoard::updatePosition()
@@ -199,9 +198,6 @@ void RuneBoard::updatePosition()
         for(int j = 0; j < RUNE_COUNT_Y; j++){
             if(runes[i][j]){
                 runes[i][j]->setPos(RUNE_AREA_X + i*RUNE_WIDTH, RUNE_AREA_Y + j*RUNE_HEIGHT);
-            }
-            else{
-                qDebug() << "Sanity check1";
             }
         }
     }
@@ -299,7 +295,7 @@ RuneBoardState RuneBoard::getState() const
 
 Rune* RuneBoard::getRandRune()
 {
-    int r = rand() % 5;
+    int r = rand() % 6;
     Rune* ret;
     switch (r){
     case 0:
@@ -316,6 +312,9 @@ Rune* RuneBoard::getRandRune()
         break;
     case 4:
         ret = new Rune(RuneType::light, RuneState::normal);
+        break;
+    case 5:
+        ret = new Rune(RuneType::dark, RuneState::normal);
         break;
     default:
         ret = nullptr;

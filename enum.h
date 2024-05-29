@@ -7,7 +7,8 @@ enum class RuneType{
     heart,
     light,
     water,
-    earth
+    earth,
+    dark
 };
 
 enum class RuneState{
