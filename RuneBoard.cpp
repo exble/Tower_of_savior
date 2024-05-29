@@ -177,6 +177,7 @@ void RuneBoard::makeCluster()
         tmp_clusters[index].push_back(QPoint(x, y));
         traverse(index, prev_type, x+1, y);
         traverse(index, prev_type, x, y+1);
+        traverse(index, prev_type, x-1, y);
     };
     for(int j = 0; j < RUNE_COUNT_Y; j++){
         for(int i = 0; i < RUNE_COUNT_X; i++){
