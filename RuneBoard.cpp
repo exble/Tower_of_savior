@@ -167,7 +167,7 @@ void RuneBoard::makeCluster()
     QList<QList<QPoint>> tmp_clusters;
     std::function<void(int, RuneType, int, int)>traverse;
     traverse = [&](int index, RuneType prev_type, int x, int y){
-        if(x >= RUNE_COUNT_X || y >= RUNE_COUNT_Y){
+        if(x >= RUNE_COUNT_X || y >= RUNE_COUNT_Y || x < 0){
             return;
         }
         if(!markMap[x][y] || runes[x][y]->getType() != prev_type){
