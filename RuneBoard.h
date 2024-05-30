@@ -45,7 +45,6 @@ private:
     QGraphicsPixmapItem* dummy_rune = nullptr;
     Rune* holding_rune = nullptr;
     CheckBoard* backBoard = nullptr;
-    QGraphicsSceneMouseEvent* mEnent = nullptr;
     int linking_index;
     int attack = 0;
     int healing = 0;
