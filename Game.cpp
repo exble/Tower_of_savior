@@ -1,13 +1,15 @@
 #include "Game.h"
-#include "param.h"
+#include "Config.h"
 #include "Object.h"
 #include "RuneBoard.h"
 #include "MouseMove.h"
+#include "StatusBar.h"
 
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
 
+using namespace Constants;
 
 void Game::start()
 {
@@ -16,14 +18,14 @@ void Game::start()
     view = new QGraphicsView();
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view->setFixedSize(GAME_WIDTH, GAME_HEIGHT);
-    scene->setSceneRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    view->setFixedSize(GameWidth, GameHeight);
+    scene->setSceneRect(0, 0, GameWidth, GameHeight);
     view->setScene(scene);
     view->show();
 
     // init game tick
     tick = new QTimer();
-    tick->start(1000.0/TICK_PER_SEC);
+    tick->start(1000.0/TickPerSec);
     connect(tick, SIGNAL(timeout()), this, SLOT(update()));
 
     // init MouseMove
@@ -42,6 +44,7 @@ void Game::update()
     foreach(TickListener* tick_reader, TickListeners){
         tick_reader->update_handler();
     }
+
 }
 
 QTimer* Game::getTick() const

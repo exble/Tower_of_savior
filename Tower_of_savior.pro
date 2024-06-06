@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++14
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -23,6 +23,7 @@ SOURCES += \
 
 HEADERS += \
     CheckBoard.h \
+    Config.h \
     Game.h \
     MouseListener.h \
     MouseMove.h \
@@ -32,8 +33,7 @@ HEADERS += \
     StatusBar.h \
     TickListener.h \
     TitleScreen.h \
-    enum.h \
-    param.h
+    enum.h
 
 FORMS +=
 

@@ -2,12 +2,17 @@
 #define STATUSBAR_H
 
 #include "Object.h"
+#include "TickListener.h"
 
-class StatusBar : public Object{
+#include <QGraphicsRectItem>
+#include <QBrush>
+
+class StatusBar : public TickListener{
 public:
-    StatusBar(const int full_val);
-    void setRect(QRectF _rec);
-    QRectF getRect() const;
+    StatusBar() = default;
+    StatusBar(QRectF rect, const int full_val);
+    void setLocation(int x, int y);
+    void setColor(QColor);
     void setValue(int val);
     int getValue() const;
     void setMaxValue(int val);
@@ -17,9 +22,12 @@ private:
 private:
     int max_val;
     int current_val;
+    int m_x, m_y;
     bool show_num;
+    QGraphicsRectItem* bar;
+    QGraphicsRectItem* barBoarder;
     QColor color;
-    QRectF rec;
+    QBrush brush;
 };
 
 #endif // STATUSBAR_H

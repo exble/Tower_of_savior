@@ -10,8 +10,6 @@
 #include <QObject>
 #include <QTimer>
 
-
-
 class TitleScreen : public MouseListener{
 public:
     TitleScreen();

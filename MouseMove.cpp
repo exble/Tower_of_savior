@@ -1,6 +1,6 @@
 #include "MouseMove.h"
 #include "Game.h"
-#include "param.h"
+#include "Config.h"
 #include "Object.h"
 #include "MouseListener.h"
 
@@ -8,9 +8,11 @@
 
 extern Game* game;
 
+using namespace Constants;
+
 MouseMove::MouseMove()
 {
-    setRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    setRect(0, 0, GameWidth, GameHeight);
     game->getScene()->addItem(this);
 
 }

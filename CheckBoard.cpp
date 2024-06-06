@@ -1,20 +1,22 @@
 #include "CheckBoard.h"
-#include "param.h"
+#include "Config.h"
 #include "Game.h"
 
 #include <QColor>
 
 extern Game* game;
 
+using namespace Constants;
+
 CheckBoard::CheckBoard()
 {
     QColor color;
     QBrush brush;
     //row major
-    for(int i = 0; i < RUNE_COUNT_Y; i++){
-        for(int j = 0; j < RUNE_COUNT_X; j++){
+    for(int i = 0; i < RuneCountY; i++){
+        for(int j = 0; j < RuneCountX; j++){
             QGraphicsRectItem* tile = new QGraphicsRectItem();
-            tile->setRect(RUNE_AREA_X + j*RUNE_WIDTH, RUNE_AREA_Y + i*RUNE_HEIGHT, RUNE_WIDTH, RUNE_HEIGHT);
+            tile->setRect(RuneAreaX + j*RuneWidth, RuneAreaY + i*RuneHeight, RuneWidth, RuneHeight);
             if((i+j)%2){
                 // bright
                 color.setRgb(57, 37, 21);
@@ -26,7 +28,7 @@ CheckBoard::CheckBoard()
             brush.setStyle(Qt::SolidPattern);
             brush.setColor(color);
             tile->setBrush(brush);
-            tile->setZValue(BOARD_Z_VALUE);
+            tile->setZValue(BoardZValue);
             tiles.push_back(tile);
         }
     }

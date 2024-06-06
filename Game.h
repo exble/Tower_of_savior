@@ -11,6 +11,7 @@ class Object;
 class MouseListener;
 class TickListener;
 class MouseMove;
+class StatusBar;
 
 class Game: public QObject{
     Q_OBJECT
@@ -30,6 +31,7 @@ private:
     QGraphicsView* view;
     RuneBoard* board;
     MouseMove* mousemove;
+    StatusBar* bar;
 
 private slots:
     void update();

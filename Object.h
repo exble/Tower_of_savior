@@ -1,7 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "param.h"
+#include "Config.h"
 #include "TickListener.h"
 
 #include <QGraphicsPixmapItem>

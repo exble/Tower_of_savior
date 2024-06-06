@@ -37,8 +37,8 @@ private:
 public:
 
 private:
-    Rune* runes[RUNE_COUNT_X][RUNE_COUNT_Y] = {};
-    bool markMap[RUNE_COUNT_X][RUNE_COUNT_Y] = {};
+    Rune* runes[Constants::RuneCountX][Constants::RuneCountY] = {};
+    bool markMap[Constants::RuneCountX][Constants::RuneCountY] = {};
     RuneBoardState state;
     QTimer* timer;
     QList<QList<QPoint>> clusters;
