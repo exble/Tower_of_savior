@@ -5,6 +5,7 @@
 #include "MouseMove.h"
 #include "PlayerStatusBar.h"
 #include "CharacterSlot.h"
+#include "Enemy.h"
 
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
@@ -47,6 +48,18 @@ void Game::start()
     characterSlot->setCharacter(4, CharacterType::Earth);
     characterSlot->setCharacter(5, CharacterType::Fire);
     characterSlot->updatePosition();
+
+    Enemy* enemy;
+    //enemy = new Enemy(MonsterType::LightSlime);
+    //enemy->setPos(100, 200);
+    //scene->addItem(enemy);
+    //enemy = new Enemy(MonsterType::DarkSlime);
+    //enemy->setPos(320, 200);
+    //scene->addItem(enemy);
+
+    enemy = new Enemy(MonsterType::HellHound);
+    enemy->setPos(140, 50);
+    scene->addItem(enemy);
 
     playerHp = PlayerMaxHP;
 }

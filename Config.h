@@ -39,6 +39,8 @@ namespace Constants{
 
     inline constexpr int SpiningTime = 10000;
 
+    inline constexpr int CDTextBoxY = 100;
+    inline constexpr int HealthBarHeight = 8;
 
 }
 

@@ -40,4 +40,23 @@ enum class CharacterType{
     Dark
 };
 
+enum class MonsterAttribute{
+    fire,
+    heart,
+    light,
+    water,
+    earth,
+    dark
+};
+
+enum class MonsterType{
+    WaterSlime,
+    FireSlime,
+    EarthSlime,
+    LightSlime,
+    DarkSlime,
+    Duck,
+    HellHound
+};
+
 #endif // ENUM_H
