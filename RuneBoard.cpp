@@ -2,6 +2,7 @@
 #include "CheckBoard.h"
 #include "Game.h"
 #include "PlayerStatusBar.h"
+#include "Battle.h"
 
 #include <QDebug>
 
@@ -24,7 +25,7 @@ RuneBoard::RuneBoard()
     dummy_rune->setZValue(100);
     game->getScene()->addItem(dummy_rune);
 
-    state = RuneBoardState::waiting;
+    state = RuneBoardState::inactive;
 
     // init Linking Timer
     timer = new QTimer();
@@ -40,10 +41,10 @@ RuneBoard::RuneBoard()
 void RuneBoard::update()
 {
     if(state == RuneBoardState::inactive){
-        // make the rune board appear to be darker
-        // maybe adding a dark shadder on top
+        setRunesOpacity(0.5);
     }
     else if(state == RuneBoardState::waiting){
+        setRunesOpacity(1);
         clusters.clear();
         CountDownTimer->start(SpiningTime);
     }
@@ -56,8 +57,11 @@ void RuneBoard::update()
     else if(state == RuneBoardState::linking){
         if(linking_index == clusters.size()){
             if(linking_index == 0){
-                state = RuneBoardState::waiting;
-
+                state = RuneBoardState::inactive;
+                for(int i = 0; i < RuneTypeCount; i++){
+                    atkinfo[(RuneType)i] = atkinfo[(RuneType)i] * comboCnt;
+                }
+                game->getCurrentBattle()->playerAttack(atkinfo);
             }
             else{
                 state = RuneBoardState::dropping;
@@ -249,7 +253,6 @@ void RuneBoard::handleSpinning()
         std::swap(runes[rune_index.x()][rune_index.y()], runes[dummy_index.x()][dummy_index.y()]);
         updatePosition();
     }
-
 }
 
 void RuneBoard::handleLinking()
@@ -257,7 +260,9 @@ void RuneBoard::handleLinking()
     foreach(const QPoint& cord, clusters[linking_index]){
         runes[cord.x()][cord.y()]->remove();
         runes[cord.x()][cord.y()] = nullptr;
+        atkinfo[runes[cord.x()][cord.y()]->getType()]++;
     }
+    comboCnt++;
     updatePosition();
 }
 
@@ -299,6 +304,8 @@ void RuneBoard::triggerLinking()
 
     game->getPlayerBar()->displayHp();
 
+    atkinfo.clear();
+    comboCnt = 0;
 }
 
 void RuneBoard::triggerSpining(QPoint index)
@@ -310,6 +317,15 @@ void RuneBoard::triggerSpining(QPoint index)
     dummy_rune->setOpacity(DummyOpacity);
 
     game->getPlayerBar()->displayCountDown();
+}
+
+void RuneBoard::setRunesOpacity(float opacity)
+{
+    for(int i = 0; i < RuneCountX; i++){
+        for(int j = 0; j < RuneCountY; j++){
+            runes[i][j]->setOpacity(opacity);
+        }
+    }
 }
 
 void RuneBoard::setState(RuneBoardState _state)

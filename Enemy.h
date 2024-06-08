@@ -14,15 +14,19 @@ public:
     Enemy(MonsterType type);
 private:
     void update();
+    void updateTextBox();
 private:
     StatusBar* healthBar;
     QGraphicsTextItem* CD_textBox;
     MonsterType type;
     MonsterAttribute attribute;
+    std::string CD_text;
+    QColor color;
     int atk;
     int hp;
     int max_hp;
     int coolDown;
+    int max_coolDown;
 };
 
 #endif // ENEMY_H

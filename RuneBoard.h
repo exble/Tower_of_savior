@@ -1,7 +1,7 @@
 #ifndef RUNEBOARD_H
 #define RUNEBOARD_H
 
-#include "Object.h"
+#include "TickListener.h"
 #include "MouseListener.h"
 #include "Rune.h"
 
@@ -12,7 +12,7 @@
 class CheckBoard;
 class StatusBar;
 
-class RuneBoard : public Object, public MouseListener{
+class RuneBoard : public TickListener, public MouseListener{
 public:
     RuneBoard();
     RuneBoardState getState() const;
@@ -34,6 +34,7 @@ private:
     void handleDropping();
     void triggerLinking();
     void triggerSpining(QPoint index);
+    void setRunesOpacity(float opacity);
 
     static Rune* getRandRune();
     static QPoint CordToIndex(QPointF point);
@@ -49,7 +50,8 @@ private:
     QGraphicsPixmapItem* dummy_rune = nullptr;
     Rune* holding_rune = nullptr;
     CheckBoard* backBoard = nullptr;
-
+    attackInfo atkinfo;
+    int comboCnt = 0;
     int linking_index = 0;
     int attack = 0;
     int healing = 0;

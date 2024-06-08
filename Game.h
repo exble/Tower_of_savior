@@ -13,6 +13,7 @@ class TickListener;
 class MouseMove;
 class PlayerStatusBar;
 class CharacterSlot;
+class Battle;
 
 class Game: public QObject{
     Q_OBJECT
@@ -28,6 +29,10 @@ public:
     QList<MouseListener*> MouseListeners;
     QList<TickListener*> TickListeners;
     RuneBoard *getBoard() const;
+    Battle *getCurrentBattle() const;
+
+    CharacterSlot *getCharacterSlot() const;
+
 private:
     QTimer* tick;
     QGraphicsScene* scene;
@@ -36,6 +41,8 @@ private:
     MouseMove* mousemove;
     PlayerStatusBar* PlayerBar;
     CharacterSlot* characterSlot;
+    Battle* battles[3];
+    Battle* currentBattle;
     int playerHp;
 
 private slots:

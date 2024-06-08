@@ -48,3 +48,10 @@ void CheckBoard::placeBoard()
         game->getScene()->addItem(tile);
     }
 }
+
+void CheckBoard::setOpacity(float opacity)
+{
+    foreach(QGraphicsRectItem* tile, tiles){
+        tile->setOpacity(opacity);
+    }
+}

@@ -6,6 +6,7 @@
 #include "PlayerStatusBar.h"
 #include "CharacterSlot.h"
 #include "Enemy.h"
+#include "Battle.h"
 
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
@@ -49,17 +50,31 @@ void Game::start()
     characterSlot->setCharacter(5, CharacterType::Fire);
     characterSlot->updatePosition();
 
-    Enemy* enemy;
-    //enemy = new Enemy(MonsterType::LightSlime);
-    //enemy->setPos(100, 200);
-    //scene->addItem(enemy);
-    //enemy = new Enemy(MonsterType::DarkSlime);
-    //enemy->setPos(320, 200);
-    //scene->addItem(enemy);
+    // init Battles
+    arrangementInfo info;
+    QList<arrangementInfo> infos;
 
-    enemy = new Enemy(MonsterType::HellHound);
-    enemy->setPos(140, 50);
-    scene->addItem(enemy);
+    for(int i = 0; i < 3; i++){
+        battles[i] = new Battle();
+    }
+
+    // Battle one
+    info.type = MonsterType::WaterSlime;
+    info.placementCord = QPoint(60, 200);
+    infos.push_back(info);
+
+    info.type = MonsterType::FireSlime;
+    info.placementCord = QPoint(210, 200);
+    infos.push_back(info);
+
+    info.type = MonsterType::EarthSlime;
+    info.placementCord = QPoint(360, 200);
+    infos.push_back(info);
+
+    battles[0]->setArrangement(infos);
+
+    // Battles two
+
 
     playerHp = PlayerMaxHP;
 }
@@ -101,6 +116,16 @@ int Game::getPlayerHp() const
 RuneBoard *Game::getBoard() const
 {
     return board;
+}
+
+Battle *Game::getCurrentBattle() const
+{
+    return currentBattle;
+}
+
+CharacterSlot *Game::getCharacterSlot() const
+{
+    return characterSlot;
 }
 
 

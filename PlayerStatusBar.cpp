@@ -19,10 +19,17 @@ PlayerStatusBar::PlayerStatusBar()
     textbox = new QGraphicsTextItem();
     QFont font;
     font.setBold(true);
-    font.setPixelSize(18);
+    font.setPixelSize(21);
     textbox->setFont(font);
     textbox->setPos(this->x()+0.8*PlayerBarWidth, this->y());
+    textbox->setDefaultTextColor(Qt::white);
     game->getScene()->addItem(textbox);
+
+    BackGround = new QGraphicsRectItem(0, 0, PlayerBarWidth, PlayerBarHeight);
+    BackGround->setBrush(QBrush(Qt::black));
+    BackGround->setZValue(-100);
+    BackGround->setPos(this->x(), this->y());
+    game->getScene()->addItem(BackGround);
 }
 
 void PlayerStatusBar::displayCountDown()

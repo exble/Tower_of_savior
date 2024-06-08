@@ -8,8 +8,11 @@
 class Character: public Object{
 public:
     Character(CharacterType type);
+    const QColor &getColor() const;
+
 private:
     CharacterType type;
+    QColor color;
 };
 
 #endif // CHARACTER_H

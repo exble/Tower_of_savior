@@ -10,6 +10,7 @@ namespace Constants{
     inline constexpr int GameHeight = 960;
     inline constexpr int GameWidth = 540;
 
+    inline constexpr int RuneTypeCount = 6;
     inline constexpr int RuneCountX = 6;
     inline constexpr int RuneCountY = 5;
     inline constexpr int RuneAreaHeight= 450;
@@ -29,6 +30,8 @@ namespace Constants{
     inline constexpr float DummyOpacity = 0.7;
     inline constexpr float DummyInactiveOpacity = 0;
 
+    inline constexpr float InactiveOpacity = 0.5;
+
     //300ms
     inline constexpr int LinkingCD = 300;
 
@@ -38,6 +41,8 @@ namespace Constants{
     inline constexpr int PlayerBarHeight = 24;
 
     inline constexpr int SpiningTime = 10000;
+
+    inline constexpr int AccumulateTime = 3000;
 
     inline constexpr int CDTextBoxY = 100;
     inline constexpr int HealthBarHeight = 8;

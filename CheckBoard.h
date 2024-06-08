@@ -8,6 +8,7 @@ public:
     CheckBoard();
     ~CheckBoard();
     void placeBoard();
+    void setOpacity(float opacity);
 private:
     QList<QGraphicsRectItem*>tiles;
 };

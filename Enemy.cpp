@@ -1,17 +1,20 @@
 #include "Enemy.h"
 #include "StatusBar.h"
+#include "Game.h"
 
 using namespace Constants;
 
+extern Game* game;
+
 Enemy::Enemy(MonsterType type)
 {
-    QColor color;
     switch(type){
     case MonsterType::WaterSlime:
         setPixmap(QPixmap(":/enemy/dataset/enemy/96n.png"));
         attribute = MonsterAttribute::water;
         color = Qt::cyan;
         max_hp = 100;
+        max_coolDown = 3;
         atk = 200;
         break;
     case MonsterType::EarthSlime:
@@ -19,6 +22,7 @@ Enemy::Enemy(MonsterType type)
         attribute = MonsterAttribute::earth;
         color = Qt::green;
         max_hp = 100;
+        max_coolDown = 3;
         atk = 200;
         break;
     case MonsterType::FireSlime:
@@ -26,6 +30,7 @@ Enemy::Enemy(MonsterType type)
         attribute = MonsterAttribute::fire;
         color = Qt::red;
         max_hp = 100;
+        max_coolDown = 3;
         atk = 200;
         break;
     case MonsterType::LightSlime:
@@ -33,6 +38,7 @@ Enemy::Enemy(MonsterType type)
         attribute = MonsterAttribute::light;
         color = Qt::yellow;
         max_hp = 100;
+        max_coolDown = 3;
         atk = 200;
         break;
     case MonsterType::DarkSlime:
@@ -40,6 +46,7 @@ Enemy::Enemy(MonsterType type)
         attribute = MonsterAttribute::dark;
         color = Qt::magenta;
         max_hp = 100;
+        max_coolDown = 3;
         atk = 200;
         break;
     case MonsterType::Duck:
@@ -47,6 +54,7 @@ Enemy::Enemy(MonsterType type)
         attribute = MonsterAttribute::earth;
         color = Qt::green;
         max_hp = 300;
+        max_coolDown = 3;
         atk = 200;
         break;
     case MonsterType::HellHound:
@@ -54,6 +62,7 @@ Enemy::Enemy(MonsterType type)
         attribute = MonsterAttribute::fire;
         color = Qt::red;
         max_hp = 700;
+        max_coolDown = 3;
         atk = 400;
         break;
     }
@@ -64,11 +73,26 @@ Enemy::Enemy(MonsterType type)
     hp = max_hp;
 
     CD_textBox = new QGraphicsTextItem();
-    CD_textBox->setPos(this->x(), CDTextBoxY);
+
+    QFont font;
+    font.setBold(true);
+    font.setPixelSize(14);
+    CD_textBox->setFont(font);
+    coolDown = max_coolDown;
+
+    game->getScene()->addItem(CD_textBox);
 }
 
 void Enemy::update()
 {
+    updateTextBox();
     healthBar->setValue(hp);
     healthBar->setPos(this->x(), this->y() + boundingRect().height() + HealthBarHeight);
+}
+
+void Enemy::updateTextBox()
+{
+    CD_text = "CD " + std::to_string(coolDown);
+    CD_textBox->setPlainText(CD_text.c_str());
+    CD_textBox->setPos(this->x(), CDTextBoxY);
 }

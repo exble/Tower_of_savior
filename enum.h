@@ -1,8 +1,9 @@
 #ifndef ENUM_H
 #define ENUM_H
 
+#include <QPoint>
+
 enum class RuneType{
-    None,
     fire,
     heart,
     light,
@@ -12,10 +13,16 @@ enum class RuneType{
 };
 
 enum class RuneState{
-    None,
     normal,
     weathered,
     burning
+};
+
+enum class BattleState{
+    idle,
+    accumulating,
+    attacking,
+    defensing
 };
 
 enum class RuneBoardState{
@@ -58,5 +65,25 @@ enum class MonsterType{
     Duck,
     HellHound
 };
+
+struct arrangementInfo{
+    MonsterType type;
+    QPoint placementCord;
+};
+
+struct attackInfo{
+    int& operator[](RuneType type){
+        return data[(int)type];
+    }
+    void clear(){
+        for(int i = 0; i < 7; i++){
+            data[i] = 0;
+        }
+    }
+private:
+    int data[7] = {};
+};
+
+
 
 #endif // ENUM_H

@@ -2,6 +2,7 @@
 #define PLAYERSTATUSBAR_H
 
 #include <QGraphicsTextItem>
+#include <QGraphicsRectItem>
 
 #include "StatusBar.h"
 #include "enum.h"
@@ -20,6 +21,7 @@ private:
 private:
     PlayerBarState state;
     QGraphicsTextItem* textbox;
+    QGraphicsRectItem* BackGround;
     std::string hp_status;
     static const QColor HealthBarColor;
     static const QColor CountDownColor;
