@@ -3,7 +3,8 @@
 #include "Object.h"
 #include "RuneBoard.h"
 #include "MouseMove.h"
-#include "StatusBar.h"
+#include "PlayerStatusBar.h"
+#include "CharacterSlot.h"
 
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
@@ -34,8 +35,20 @@ void Game::start()
     // init rune board
     board = new RuneBoard();
 
+    // init Player Bar
+    PlayerBar = new PlayerStatusBar();
 
+    // init Character Slot
+    characterSlot = new CharacterSlot();
+    characterSlot->setCharacter(0, CharacterType::Fire);
+    characterSlot->setCharacter(1, CharacterType::Water);
+    characterSlot->setCharacter(2, CharacterType::Light);
+    characterSlot->setCharacter(3, CharacterType::Dark);
+    characterSlot->setCharacter(4, CharacterType::Earth);
+    characterSlot->setCharacter(5, CharacterType::Fire);
+    characterSlot->updatePosition();
 
+    playerHp = PlayerMaxHP;
 }
 
 void Game::update()
@@ -61,5 +74,21 @@ QGraphicsView *Game::getView() const
 {
     return view;
 }
+
+PlayerStatusBar *Game::getPlayerBar() const
+{
+    return PlayerBar;
+}
+
+int Game::getPlayerHp() const
+{
+    return playerHp;
+}
+
+RuneBoard *Game::getBoard() const
+{
+    return board;
+}
+
 
 

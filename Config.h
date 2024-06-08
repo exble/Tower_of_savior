@@ -1,9 +1,11 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <QColor>
+
 namespace Constants{
     inline constexpr int TickPerSec = 100;
-    inline constexpr int MaxHP = 2000;
+    inline constexpr int PlayerMaxHP = 2000;
 
     inline constexpr int GameHeight = 960;
     inline constexpr int GameWidth = 540;
@@ -18,7 +20,10 @@ namespace Constants{
     inline constexpr int RuneHeight = 90;
     inline constexpr int RuneWidth = 90;
 
-    inline constexpr int RuneGarvityAcceleration = 3;
+    inline constexpr int CharacterHeight = 90;
+    inline constexpr int CharacterWidth = 90;
+
+    inline constexpr int RuneGarvityAcceleration = 300 / TickPerSec;
     inline constexpr float RuneOpacity = 0.3;
 
     inline constexpr float DummyOpacity = 0.7;
@@ -28,6 +33,12 @@ namespace Constants{
     inline constexpr int LinkingCD = 300;
 
     inline constexpr int BoardZValue = -100;
+
+    inline constexpr int PlayerBarWidth = GameWidth;
+    inline constexpr int PlayerBarHeight = 24;
+
+    inline constexpr int SpiningTime = 10000;
+
 
 }
 

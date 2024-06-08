@@ -23,7 +23,21 @@ enum class RuneBoardState{
     waiting,
     spinning,
     linking,
-    dropping
+    dropping,
+    attacking
+};
+
+enum class PlayerBarState{
+    DisplayHp,
+    SpinningCountDown,
+};
+
+enum class CharacterType{
+    Water,
+    Fire,
+    Earth,
+    Light,
+    Dark
 };
 
 #endif // ENUM_H

@@ -9,11 +9,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Character.cpp \
+    CharacterSlot.cpp \
     CheckBoard.cpp \
+    Enemy.cpp \
     Game.cpp \
     MouseListener.cpp \
     MouseMove.cpp \
     Object.cpp \
+    PlayerStatusBar.cpp \
     Rune.cpp \
     RuneBoard.cpp \
     StatusBar.cpp \
@@ -22,12 +26,16 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    Character.h \
+    CharacterSlot.h \
     CheckBoard.h \
     Config.h \
+    Enemy.h \
     Game.h \
     MouseListener.h \
     MouseMove.h \
     Object.h \
+    PlayerStatusBar.h \
     Rune.h \
     RuneBoard.h \
     StatusBar.h \

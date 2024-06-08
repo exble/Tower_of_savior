@@ -6,6 +6,7 @@
 class CheckBoard{
 public:
     CheckBoard();
+    ~CheckBoard();
     void placeBoard();
 private:
     QList<QGraphicsRectItem*>tiles;

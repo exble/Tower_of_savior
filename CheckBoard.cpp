@@ -35,6 +35,13 @@ CheckBoard::CheckBoard()
 
 }
 
+CheckBoard::~CheckBoard()
+{
+    foreach(QGraphicsRectItem* tile, tiles){
+        delete tile;
+    }
+}
+
 void CheckBoard::placeBoard()
 {
     foreach(QGraphicsRectItem* tile, tiles){

@@ -11,7 +11,8 @@ class Object;
 class MouseListener;
 class TickListener;
 class MouseMove;
-class StatusBar;
+class PlayerStatusBar;
+class CharacterSlot;
 
 class Game: public QObject{
     Q_OBJECT
@@ -21,17 +22,21 @@ public:
     QTimer* getTick() const;
     QGraphicsScene* getScene() const;
     QGraphicsView* getView() const;
+    PlayerStatusBar* getPlayerBar() const;
+    int getPlayerHp() const;
     QList<Object*> Object_list;
     QList<MouseListener*> MouseListeners;
     QList<TickListener*> TickListeners;
-
+    RuneBoard *getBoard() const;
 private:
     QTimer* tick;
     QGraphicsScene* scene;
     QGraphicsView* view;
     RuneBoard* board;
     MouseMove* mousemove;
-    StatusBar* bar;
+    PlayerStatusBar* PlayerBar;
+    CharacterSlot* characterSlot;
+    int playerHp;
 
 private slots:
     void update();

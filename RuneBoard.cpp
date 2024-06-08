@@ -1,6 +1,7 @@
 #include "RuneBoard.h"
 #include "CheckBoard.h"
 #include "Game.h"
+#include "PlayerStatusBar.h"
 
 #include <QDebug>
 
@@ -29,6 +30,9 @@ RuneBoard::RuneBoard()
     timer = new QTimer();
     timer->setSingleShot(true);
 
+    CountDownTimer = new QTimer();
+    CountDownTimer->setSingleShot(true);
+
     initBoard();
     updatePosition();
 }
@@ -36,19 +40,24 @@ RuneBoard::RuneBoard()
 void RuneBoard::update()
 {
     if(state == RuneBoardState::inactive){
-
+        // make the rune board appear to be darker
+        // maybe adding a dark shadder on top
     }
     else if(state == RuneBoardState::waiting){
         clusters.clear();
+        CountDownTimer->start(SpiningTime);
     }
     else if(state == RuneBoardState::spinning){
         linking_index = 0;
-        handle_spinning();
+
+        // dealing countdown & update the bar
+        handleSpinning();
     }
     else if(state == RuneBoardState::linking){
         if(linking_index == clusters.size()){
             if(linking_index == 0){
                 state = RuneBoardState::waiting;
+
             }
             else{
                 state = RuneBoardState::dropping;
@@ -57,7 +66,7 @@ void RuneBoard::update()
             }
         }
         if(!timer->isActive()){
-            handle_linking();
+            handleLinking();
             linking_index++;
             timer->start(LinkingCD);
         }
@@ -65,7 +74,7 @@ void RuneBoard::update()
     else if(state == RuneBoardState::dropping){
         linking_index = 0;
         if(!timer->isActive()){
-            handle_dropping();
+            handleDropping();
         }
     }
 }
@@ -75,11 +84,7 @@ void RuneBoard::MousePressEvent(const QGraphicsSceneMouseEvent *event)
     mouse_cord = event->pos();
     QPoint index = CordToIndex(mouse_cord);
     if(state == RuneBoardState::waiting && index != QPoint(-1, -1)){
-        state = RuneBoardState::spinning;
-        holding_rune = runes[index.x()][index.y()];
-        holding_rune -> setOpacity(RuneOpacity);
-        dummy_rune->setPixmap(holding_rune->pixmap());
-        dummy_rune->setOpacity(DummyOpacity);
+        triggerSpining(index);
     }
 }
 
@@ -87,14 +92,7 @@ void RuneBoard::MouseReleaseEvent(const QGraphicsSceneMouseEvent *event)
 {
     mouse_cord = event->pos();
     if(state == RuneBoardState::spinning && holding_rune != nullptr){
-        state = RuneBoardState::linking;
-        holding_rune->setOpacity(1);
-        dummy_rune->setOpacity(DummyInactiveOpacity);
-        holding_rune = nullptr;
-
-        checkLink();
-        makeCluster();
-        timer->start(LinkingCD);
+        triggerLinking();
     }
 }
 
@@ -205,9 +203,12 @@ void RuneBoard::updatePosition()
     }
 }
 
-void RuneBoard::handle_spinning()
+void RuneBoard::handleSpinning()
 {
-
+    if(!CountDownTimer->isActive()){
+        triggerLinking();
+        return;
+    }
     QPointF final_pos;
     QPointF rectified_mouse_cord;
 
@@ -251,7 +252,7 @@ void RuneBoard::handle_spinning()
 
 }
 
-void RuneBoard::handle_linking()
+void RuneBoard::handleLinking()
 {
     foreach(const QPoint& cord, clusters[linking_index]){
         runes[cord.x()][cord.y()]->remove();
@@ -260,7 +261,7 @@ void RuneBoard::handle_linking()
     updatePosition();
 }
 
-void RuneBoard::handle_dropping()
+void RuneBoard::handleDropping()
 {
     bool is_finish = true;
     for(int i = 0; i < RuneCountX; i++){
@@ -283,6 +284,32 @@ void RuneBoard::handle_dropping()
         makeCluster();
         timer->start(LinkingCD);
     }
+}
+
+void RuneBoard::triggerLinking()
+{
+    state = RuneBoardState::linking;
+    holding_rune->setOpacity(1);
+    dummy_rune->setOpacity(DummyInactiveOpacity);
+    holding_rune = nullptr;
+
+    checkLink();
+    makeCluster();
+    timer->start(LinkingCD);
+
+    game->getPlayerBar()->displayHp();
+
+}
+
+void RuneBoard::triggerSpining(QPoint index)
+{
+    state = RuneBoardState::spinning;
+    holding_rune = runes[index.x()][index.y()];
+    holding_rune -> setOpacity(RuneOpacity);
+    dummy_rune->setPixmap(holding_rune->pixmap());
+    dummy_rune->setOpacity(DummyOpacity);
+
+    game->getPlayerBar()->displayCountDown();
 }
 
 void RuneBoard::setState(RuneBoardState _state)
@@ -346,4 +373,9 @@ QPointF RuneBoard::IndexToCord(QPoint point)
     ret.rx() = RuneAreaX + point.x()*RuneWidth;
     ret.ry() = RuneAreaY + point.y()*RuneHeight;
     return ret;
+}
+
+QTimer *RuneBoard::getCountDownTimer() const
+{
+    return CountDownTimer;
 }

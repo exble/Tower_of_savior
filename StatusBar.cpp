@@ -5,22 +5,20 @@
 
 extern Game* game;
 
-StatusBar::StatusBar(QRectF rect, const int full_val)
-    :max_val(full_val)
+StatusBar::StatusBar(int width, int height, const int max_val)
+    :max_val(max_val), current_val(max_val)
 {
     color = Qt::red;
     bar = new QGraphicsRectItem();
-    barBoarder = new QGraphicsRectItem();
-    m_x = rect.x();
-    m_y = rect.y();
+    this->setRect(0, 0, width, height);
+    brush.setStyle(Qt::SolidPattern);
     game->getScene()->addItem(bar);
-    game->getScene()->addItem(barBoarder);
+    game->getScene()->addItem(this);
 }
 
-void StatusBar::setLocation(int x, int y)
+StatusBar::~StatusBar()
 {
-    m_x = x;
-    m_y = y;
+    delete bar;
 }
 
 void StatusBar::setColor(QColor color)
@@ -43,6 +41,15 @@ void StatusBar::setMaxValue(int val)
     max_val = val;
 }
 
+void StatusBar::resize()
+{
+    brush.setColor(color);
+    QRectF newCriteria(0, 0, ((float)current_val/max_val)*this->boundingRect().width(), this->boundingRect().height());
+    bar->setRect(newCriteria);
+    bar->setPos(this->x(), this->y());
+    bar->setBrush(brush);
+}
+
 int StatusBar::getMaxValue() const
 {
     return max_val;
@@ -50,10 +57,5 @@ int StatusBar::getMaxValue() const
 
 void StatusBar::update()
 {
-    brush.setStyle(Qt::SolidPattern);
-    brush.setColor(color);
-
-    QRectF newCriteria(m_x, m_y, ((float)current_val/max_val)*barBoarder->boundingRect().width(), barBoarder->boundingRect().height());
-    bar->setRect(newCriteria);
-    bar->setBrush(brush);
+    resize();
 }

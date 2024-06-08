@@ -10,10 +10,14 @@
 #include <QTimer>
 
 class CheckBoard;
+class StatusBar;
 
 class RuneBoard : public Object, public MouseListener{
 public:
     RuneBoard();
+    RuneBoardState getState() const;
+    void setState(RuneBoardState state);
+    QTimer *getCountDownTimer() const;
 private:
     void update();
     void MousePressEvent(const QGraphicsSceneMouseEvent* event);
@@ -25,27 +29,28 @@ private:
     void checkLink();
     void makeCluster();
     void updatePosition();
-    void handle_spinning();
-    void handle_linking();
-    void handle_dropping();
-    void setState(RuneBoardState state);
-    RuneBoardState getState() const;
+    void handleSpinning();
+    void handleLinking();
+    void handleDropping();
+    void triggerLinking();
+    void triggerSpining(QPoint index);
+
     static Rune* getRandRune();
     static QPoint CordToIndex(QPointF point);
     static QPointF IndexToCord(QPoint point);
-
-public:
 
 private:
     Rune* runes[Constants::RuneCountX][Constants::RuneCountY] = {};
     bool markMap[Constants::RuneCountX][Constants::RuneCountY] = {};
     RuneBoardState state;
     QTimer* timer;
+    QTimer* CountDownTimer;
     QList<QList<QPoint>> clusters;
     QGraphicsPixmapItem* dummy_rune = nullptr;
     Rune* holding_rune = nullptr;
     CheckBoard* backBoard = nullptr;
-    int linking_index;
+
+    int linking_index = 0;
     int attack = 0;
     int healing = 0;
     QPointF mouse_cord;
