@@ -10,6 +10,8 @@ public:
     Character(CharacterType type);
     const QColor &getColor() const;
 
+    CharacterType getType() const;
+
 private:
     CharacterType type;
     QColor color;

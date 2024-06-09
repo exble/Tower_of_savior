@@ -25,7 +25,7 @@ RuneBoard::RuneBoard()
     dummy_rune->setZValue(100);
     game->getScene()->addItem(dummy_rune);
 
-    state = RuneBoardState::inactive;
+    state = RuneBoardState::waiting;
 
     // init Linking Timer
     timer = new QTimer();
@@ -258,9 +258,9 @@ void RuneBoard::handleSpinning()
 void RuneBoard::handleLinking()
 {
     foreach(const QPoint& cord, clusters[linking_index]){
+        atkinfo[runes[cord.x()][cord.y()]->getType()]++;
         runes[cord.x()][cord.y()]->remove();
         runes[cord.x()][cord.y()] = nullptr;
-        atkinfo[runes[cord.x()][cord.y()]->getType()]++;
     }
     comboCnt++;
     updatePosition();

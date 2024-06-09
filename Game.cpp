@@ -58,6 +58,8 @@ void Game::start()
         battles[i] = new Battle();
     }
 
+    currentBattle = battles[0];
+
     // Battle one
     info.type = MonsterType::WaterSlime;
     info.placementCord = QPoint(60, 200);
@@ -73,6 +75,7 @@ void Game::start()
 
     battles[0]->setArrangement(infos);
 
+    currentBattle->start();
     // Battles two
 
 

@@ -41,7 +41,7 @@ private:
     MouseMove* mousemove;
     PlayerStatusBar* PlayerBar;
     CharacterSlot* characterSlot;
-    Battle* battles[3];
+    std::array<Battle*, 3> battles;
     Battle* currentBattle;
     int playerHp;
 

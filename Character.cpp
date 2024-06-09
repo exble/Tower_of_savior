@@ -31,3 +31,8 @@ const QColor &Character::getColor() const
 {
     return color;
 }
+
+CharacterType Character::getType() const
+{
+    return type;
+}

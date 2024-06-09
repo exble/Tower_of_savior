@@ -11,8 +11,10 @@ CharacterSlot::CharacterSlot()
     for(int i = 0; i < max_slot; i++){
         slot[i] = nullptr;
         text_slot[i] = new QGraphicsTextItem();
+        text_slot[i]->setZValue(500);
     }
     font.setBold(true);
+    font.setPixelSize(40);
 }
 
 CharacterSlot::~CharacterSlot()
@@ -30,7 +32,7 @@ void CharacterSlot::setCharacter(int index, CharacterType type)
     }
     slot[index] = new Character(type);
     game->getScene()->addItem(slot[index]);
-
+    game->getScene()->addItem(text_slot[index]);
     text_slot[index]->setDefaultTextColor(slot[index]->getColor());
     text_slot[index]->setFont(font);
 }
@@ -44,16 +46,18 @@ void CharacterSlot::updatePosition()
 {
     for(int i = 0; i < max_slot; i++){
         slot[i]->setPos(slot_x + i*CharacterWidth, slot_y);
-        text_slot[i]->setPos(slot_x + i*CharacterWidth, slot_y + 3);
+        text_slot[i]->setPos(slot_x + i*CharacterWidth + 0.3* CharacterWidth, slot_y + 20);
     }
 }
 
-const Character** CharacterSlot::getSlot() const
+const std::array<Character *, 6> &CharacterSlot::getSlot() const
 {
-    return (const Character**)slot;
+    return slot;
 }
 
-const QGraphicsTextItem** CharacterSlot::getTextSlot() const
+std::array<QGraphicsTextItem *, 6> &CharacterSlot::getTextSlot()
 {
-    return (const QGraphicsTextItem**)text_slot;
+    return text_slot;
 }
+
+

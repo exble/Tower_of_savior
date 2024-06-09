@@ -20,12 +20,15 @@ public:
     void playerAttack(attackInfo info);
     void enemyAttack();
     void passRound();
-    void setArrangement(QList<arrangementInfo>);
+    void setArrangement(QList<arrangementInfo> arra);
 private:
     void update();
     QList<arrangementInfo> arrangement;
+    std::array<int, 6> attackOfEachSlot;
     QList<Enemy*> enemyList;
-    QTimer* accumulateTimer;
+    std::string str;
+    QTimer* timer = nullptr;
+    QTimer* attackTimer = nullptr;
     BattleState state;
     attackInfo atkinfo;
 };

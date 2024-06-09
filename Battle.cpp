@@ -2,6 +2,8 @@
 #include "Enemy.h"
 #include "Game.h"
 #include "CharacterSlot.h"
+#include "Character.h"
+#include "RuneBoard.h"
 
 extern Game* game;
 
@@ -9,8 +11,10 @@ using namespace Constants;
 
 Battle::Battle()
 {
-    accumulateTimer = new QTimer();
-    accumulateTimer->setSingleShot(true);
+    timer = new QTimer();
+    timer->setSingleShot(true);
+    attackTimer = new QTimer();
+    attackTimer->setSingleShot(true);
 }
 
 Battle::~Battle()
@@ -24,12 +28,24 @@ void Battle::update()
         // do nothing
     }
     else if(state == BattleState::accumulating){
-        for(int i = 0; i < RuneTypeCount; i++){
-            game->getCharacterSlot();
+        if(!timer->isActive()){
+            state = BattleState::attacking;
+            game->getBoard()->setState(RuneBoardState::waiting);
+            attackTimer->start(AttackSepTime);
+        }
+        else{
+            auto text_slot = game->getCharacterSlot()->getTextSlot();
+            for(size_t i = 0; i < text_slot.size(); i++){
+                int the_value = attackOfEachSlot[i] * ((float)(AccumulateTime - timer->remainingTime()) / AccumulateTime);
+                str = std::to_string(the_value);
+                text_slot[i]->setPlainText(str.c_str());
+            }
         }
     }
     else if(state == BattleState::attacking){
+        if(!attackTimer->isActive()){
 
+        }
     }
     else if(state == BattleState::defensing){
 
@@ -64,7 +80,28 @@ void Battle::playerAttack(attackInfo info)
 {
     state = BattleState::accumulating;
     atkinfo = info;
-    accumulateTimer->start(AccumulateTime);
+    timer->start(AccumulateTime);
+    const auto slot = game->getCharacterSlot()->getSlot();
+    for(size_t i = 0; i < slot.size(); i++) {
+        switch(slot[i]->getType()){
+        case CharacterType::Water:
+            attackOfEachSlot[i] = atkinfo[RuneType::water];
+            break;
+        case CharacterType::Fire:
+            attackOfEachSlot[i] = atkinfo[RuneType::fire];
+            break;
+        case CharacterType::Earth:
+            attackOfEachSlot[i] = atkinfo[RuneType::earth];
+            break;
+        case CharacterType::Light:
+            attackOfEachSlot[i] = atkinfo[RuneType::light];
+            break;
+        case CharacterType::Dark:
+            attackOfEachSlot[i] = atkinfo[RuneType::dark];
+            break;
+        }
+    }
+
 }
 
 void Battle::enemyAttack()

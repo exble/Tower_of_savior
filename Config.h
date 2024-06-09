@@ -42,9 +42,10 @@ namespace Constants{
 
     inline constexpr int SpiningTime = 10000;
 
-    inline constexpr int AccumulateTime = 3000;
+    inline constexpr int AccumulateTime = 500;
+    inline constexpr int AttackSepTime = 100;
 
-    inline constexpr int CDTextBoxY = 100;
+    inline constexpr int CDTextBoxY = 200;
     inline constexpr int HealthBarHeight = 8;
 
 }

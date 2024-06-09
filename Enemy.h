@@ -16,17 +16,17 @@ private:
     void update();
     void updateTextBox();
 private:
-    StatusBar* healthBar;
-    QGraphicsTextItem* CD_textBox;
+    StatusBar* healthBar = nullptr;
+    QGraphicsTextItem* CD_textBox = nullptr;
     MonsterType type;
     MonsterAttribute attribute;
     std::string CD_text;
     QColor color;
-    int atk;
-    int hp;
-    int max_hp;
-    int coolDown;
-    int max_coolDown;
+    int atk = 0;
+    int hp = 0;
+    int max_hp = 0;
+    int coolDown = 0;
+    int max_coolDown = 0;
 };
 
 #endif // ENEMY_H
