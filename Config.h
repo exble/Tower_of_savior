@@ -46,7 +46,7 @@ namespace Constants{
     inline constexpr int AccumulateTime = 500;
     inline constexpr int AttackSepTime = 200;
     inline constexpr int BulletupdateCount = AttackSepTime / (1000 / TickPerSec);
-    inline constexpr int BattleSwapDelay = 100;
+    inline constexpr int BattleSwapDelay = 500;
     inline constexpr int Healingdelay = 500;
 
     inline constexpr int CDTextBoxY = 180;
