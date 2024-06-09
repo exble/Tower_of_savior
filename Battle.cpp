@@ -26,7 +26,11 @@ Battle::~Battle()
 void Battle::update()
 {
     if(state == BattleState::idle){
-        // do nothing
+        foreach(Enemy* e, enemyList){
+            if(e->getHp() <= 0){
+                e->remove();
+            }
+        }
     }
     else if(state == BattleState::accumulating){
         if(!timer->isActive()){
@@ -65,9 +69,19 @@ void Battle::update()
         }
         else if(!bulletGoing){
             if(attackOfEachSlot[atk_index] != 0){
+
                 int r = rand() % enemyList.size();
                 while (enemyList[r]->getHp() <= 0) {
                     r = rand() % enemyList.size();
+                    bool allNoHpFlag = true;
+                    foreach(Enemy* e, enemyList){
+                        if(e->getHp() > 0){
+                            allNoHpFlag = false;
+                        }
+                    }
+                    if(allNoHpFlag){
+                        break;
+                    }
                 }
                 fireBullet(atk_index,
                            enemyList[r],
