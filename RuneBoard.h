@@ -1,6 +1,6 @@
 #ifndef RUNEBOARD_H
 #define RUNEBOARD_H
-
+#include <QGraphicsTextItem>
 #include "TickListener.h"
 #include "MouseListener.h"
 #include "Rune.h"
@@ -36,6 +36,9 @@ private:
     void triggerSpining(QPoint index);
     void setRunesOpacity(float opacity);
 
+    int comboCount;
+        QGraphicsTextItem* comboTextItem;
+
     static Rune* getRandRune();
     static QPoint CordToIndex(QPointF point);
     static QPointF IndexToCord(QPoint point);
@@ -55,6 +58,7 @@ private:
     int linking_index = 0;
     int attack = 0;
     int healing = 0;
+
     QPointF mouse_cord;
 };
 
