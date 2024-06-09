@@ -26,6 +26,10 @@ void Game::start()
     view->setScene(scene);
     view->show();
 
+    // init background item
+    backgroundItem = new QGraphicsPixmapItem();
+    scene->addItem(backgroundItem);
+
     // init game tick
     tick = new QTimer();
     tick->start(1000.0/TickPerSec);
@@ -127,6 +131,7 @@ void Game::nextBattle()
     BattleIndex++;
     currentBattle = battles[BattleIndex];
     currentBattle->start();
+    setBackgroundImage(currentBattle->getBackgroundImagePath());
 }
 
 CharacterSlot *Game::getCharacterSlot() const
@@ -158,6 +163,7 @@ void Game::initBattles()
     infos.push_back(info);
 
     battles[0]->setArrangement(infos);
+    battles[0]->setBackgroundImagePath(":/other/dataset/other/background1.png"); // Set background image path for battle one
 
     // Battle two
     infos.clear();
@@ -175,6 +181,7 @@ void Game::initBattles()
     infos.push_back(info);
 
     battles[1]->setArrangement(infos);
+    battles[1]->setBackgroundImagePath(":/other/dataset/other/background2.png"); // Set background image path for battle two
 
     // Battle three
     infos.clear();
@@ -184,7 +191,14 @@ void Game::initBattles()
     infos.push_back(info);
 
     battles[2]->setArrangement(infos);
+    battles[2]->setBackgroundImagePath(":/other/dataset/other/background3.png"); // Set background image path for battle three
 }
 
-
+void Game::setBackgroundImage(const QString &imagePath)
+{
+    QPixmap backgroundPixmap(imagePath);
+    backgroundItem->setPixmap(backgroundPixmap);
+    backgroundItem->setPos(0, 0);
+    backgroundItem->setZValue(-1); // Ensure the background is behind other items
+}
 
