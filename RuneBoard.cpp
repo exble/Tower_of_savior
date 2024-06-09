@@ -36,17 +36,66 @@ RuneBoard::RuneBoard()
 
     initBoard();
     updatePosition();
+
+    // Initialize combo count and text item
+    comboCount = 0;
+    comboTextItem = new QGraphicsTextItem();
+    comboTextItem->setDefaultTextColor(Qt::yellow);
+    comboTextItem->setFont(QFont("Times New Roman", 40));
+    comboTextItem->setPos(GameWidth - 100, GameHeight - 50); // Position in the bottom-right corner
+    comboTextItem->setVisible(false); // Initially hide the combo text item
+    game->getScene()->addItem(comboTextItem);
 }
+
+void RuneBoard::handleLinking()
+{
+    foreach(const QPoint& cord, clusters[linking_index]){
+        atkinfo[runes[cord.x()][cord.y()]->getType()]++;
+        runes[cord.x()][cord.y()]->remove();
+        runes[cord.x()][cord.y()] = nullptr;
+    }
+    comboCount++; // Increment combo count
+
+    if (comboCount > 1) { // Only show combo text if combo count is greater than 1
+        comboTextItem->setHtml(QString("<span style='font-size:48px;'>%1</span> <span style='font-size:32px;'>combo!</span>").arg(comboCount)); // Update text item
+        comboTextItem->setPos(GameWidth - comboTextItem->boundingRect().width() - 10, GameHeight - comboTextItem->boundingRect().height() - 10); // Adjust position based on text size
+        comboTextItem->setVisible(true); // Show the combo text item
+    }
+    updatePosition();
+}
+
+void RuneBoard::triggerLinking()
+{
+    state = RuneBoardState::linking;
+    holding_rune->setOpacity(1);
+    dummy_rune->setOpacity(DummyInactiveOpacity);
+    holding_rune = nullptr;
+
+    checkLink();
+    makeCluster();
+    timer->start(LinkingCD);
+
+    game->getPlayerBar()->displayHp();
+
+    atkinfo.clear();
+    comboCount = 0; // Reset combo count
+    comboTextItem->setVisible(false); // Hide the combo text item when resetting combo count
+}
+
 
 void RuneBoard::update()
 {
     if(state == RuneBoardState::inactive){
         setRunesOpacity(0.5);
+        comboCount = 0; // Reset combo count
+        comboTextItem->setVisible(false); // Hide the combo text item
     }
     else if(state == RuneBoardState::waiting){
         setRunesOpacity(1);
         clusters.clear();
         CountDownTimer->start(SpiningTime);
+        comboCount = 0; // Reset combo count
+        comboTextItem->setVisible(false); // Hide the combo text item
     }
     else if(state == RuneBoardState::spinning){
         linking_index = 0;
@@ -62,6 +111,8 @@ void RuneBoard::update()
                     atkinfo[(RuneType)i] = atkinfo[(RuneType)i] * comboCnt;
                 }
                 game->getCurrentBattle()->playerAttack(atkinfo);
+                comboTextItem->setVisible(false); // Hide the combo text item when attack is done
+                comboCount = 0; // Reset combo count
             }
             else{
                 state = RuneBoardState::dropping;
@@ -255,17 +306,6 @@ void RuneBoard::handleSpinning()
     }
 }
 
-void RuneBoard::handleLinking()
-{
-    foreach(const QPoint& cord, clusters[linking_index]){
-        atkinfo[runes[cord.x()][cord.y()]->getType()]++;
-        runes[cord.x()][cord.y()]->remove();
-        runes[cord.x()][cord.y()] = nullptr;
-    }
-    comboCnt++;
-    updatePosition();
-}
-
 void RuneBoard::handleDropping()
 {
     bool is_finish = true;
@@ -289,23 +329,6 @@ void RuneBoard::handleDropping()
         makeCluster();
         timer->start(LinkingCD);
     }
-}
-
-void RuneBoard::triggerLinking()
-{
-    state = RuneBoardState::linking;
-    holding_rune->setOpacity(1);
-    dummy_rune->setOpacity(DummyInactiveOpacity);
-    holding_rune = nullptr;
-
-    checkLink();
-    makeCluster();
-    timer->start(LinkingCD);
-
-    game->getPlayerBar()->displayHp();
-
-    atkinfo.clear();
-    comboCnt = 0;
 }
 
 void RuneBoard::triggerSpining(QPoint index)
@@ -395,3 +418,7 @@ QTimer *RuneBoard::getCountDownTimer() const
 {
     return CountDownTimer;
 }
+
+
+
+
