@@ -169,6 +169,7 @@ void Battle::start()
         game->getScene()->addItem(e);
         enemyAlive.push_back(true);
     }
+    game->setBackgroundImage(backgroundImagePath); // Set the background image
 }
 
 void Battle::end()
@@ -225,4 +226,12 @@ void Battle::fireBullet(int index, Enemy *target, int dmg, Attribute attribute)
     bullet->setTarget(endloc);
 }
 
+void Battle::setBackgroundImagePath(const QString &path)
+{
+    backgroundImagePath = path;
+}
 
+QString Battle::getBackgroundImagePath() const
+{
+    return backgroundImagePath;
+}
