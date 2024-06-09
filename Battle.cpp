@@ -73,7 +73,7 @@ void Battle::end()
 
 void Battle::triggerCountDown()
 {
-
+    //test
 }
 
 void Battle::playerAttack(attackInfo info)
