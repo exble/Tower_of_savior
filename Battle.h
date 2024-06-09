@@ -7,6 +7,7 @@
 
 #include <QPoint>
 #include <QTimer>
+#include <array>
 
 class Enemy;
 

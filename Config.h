@@ -2,6 +2,7 @@
 #define CONFIG_H
 
 #include <QColor>
+#include <array>
 
 namespace Constants{
     inline constexpr int TickPerSec = 100;
