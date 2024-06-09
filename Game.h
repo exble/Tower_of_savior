@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
 #include <QObject>
+#include <QGraphicsPixmapItem>
 
 class RuneBoard;
 class Object;
@@ -33,6 +34,8 @@ public:
     int& ref_playerHp();
     void nextBattle();
     CharacterSlot *getCharacterSlot() const;
+    void setBackgroundImage(const QString &imagePath);
+
 private:
     void initBattles();
 
@@ -49,6 +52,7 @@ private:
     QTimer* battletimer;
     int playerHp = 0;
     int BattleIndex = 0;
+    QGraphicsPixmapItem* backgroundItem;
 
 private slots:
     void update();
