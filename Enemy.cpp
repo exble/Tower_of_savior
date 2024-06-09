@@ -79,6 +79,7 @@ Enemy::Enemy(MonsterType type)
     font.setBold(true);
     font.setPixelSize(14);
     CD_textBox->setFont(font);
+    CD_textBox->setDefaultTextColor(Qt::white);
     coolDown = max_coolDown;
 
     game->getScene()->addItem(CD_textBox);
