@@ -8,6 +8,7 @@
 #include <QPoint>
 #include <QTimer>
 #include <array>
+#include <QGraphicsPixmapItem>
 
 class Enemy;
 
@@ -29,6 +30,9 @@ public:
     bool getIsFinish() const;
     void setIsFinish(bool newIsFinish);
 
+    void setBackgroundImagePath(const QString &path);
+    QString getBackgroundImagePath() const;
+
 private:
     void update();
 private:
@@ -44,6 +48,7 @@ private:
     attackInfo atkinfo;
     int atk_index = 0;
     bool isFinish = false;
+    QString backgroundImagePath;
 };
 
 #endif // BATTLE_H
