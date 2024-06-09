@@ -60,4 +60,11 @@ std::array<QGraphicsTextItem *, 6> &CharacterSlot::getTextSlot()
     return text_slot;
 }
 
+void CharacterSlot::clearTextSlot()
+{
+    for(auto& i : text_slot){
+        i->setPlainText("");
+    }
+}
+
 

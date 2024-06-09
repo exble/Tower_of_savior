@@ -22,7 +22,8 @@ enum class BattleState{
     idle,
     accumulating,
     attacking,
-    defensing
+    defending,
+    healing
 };
 
 enum class RuneBoardState{
@@ -47,13 +48,12 @@ enum class CharacterType{
     Dark
 };
 
-enum class MonsterAttribute{
-    fire,
-    heart,
-    light,
-    water,
-    earth,
-    dark
+enum class Attribute{
+    Water,
+    Fire,
+    Earth,
+    Light,
+    Dark
 };
 
 enum class MonsterType{

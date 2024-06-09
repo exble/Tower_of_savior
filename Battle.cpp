@@ -4,6 +4,7 @@
 #include "CharacterSlot.h"
 #include "Character.h"
 #include "RuneBoard.h"
+#include "Bullet.h"
 
 extern Game* game;
 
@@ -29,7 +30,8 @@ void Battle::update()
     }
     else if(state == BattleState::accumulating){
         if(!timer->isActive()){
-            state = BattleState::attacking;
+            state = BattleState::healing;
+            atk_index = 0;
             game->getBoard()->setState(RuneBoardState::waiting);
             attackTimer->start(AttackSepTime);
         }
@@ -42,14 +44,70 @@ void Battle::update()
             }
         }
     }
-    else if(state == BattleState::attacking){
-        if(!attackTimer->isActive()){
+    else if(state == BattleState::healing){
+        // need animation
 
+        game->ref_playerHp() += atkinfo[RuneType::heart] * 5;
+        if(game->ref_playerHp() > PlayerMaxHP){
+            game->ref_playerHp() = PlayerMaxHP;
+        }
+        state = BattleState::attacking;
+    }
+    else if(state == BattleState::attacking){
+        if(atk_index == 6){
+            state = BattleState::defending;
+            for(auto& i : enemyList){
+                if(i->getCoolDown() > 0){
+                    i->setCoolDown(i->getCoolDown()-1);
+                }
+            }
+            game->getCharacterSlot()->clearTextSlot();
+        }
+        else if(!bulletGoing){
+            if(attackOfEachSlot[atk_index] != 0){
+                int r = rand() % enemyList.size();
+                while (enemyList[r]->getHp() <= 0) {
+                    r = rand() % enemyList.size();
+                }
+                fireBullet(atk_index,
+                           enemyList[r],
+                           attackOfEachSlot[atk_index],
+                           game->getCharacterSlot()->getSlot()[atk_index]->getAttribute());
+            }
+            atk_index++;
         }
     }
-    else if(state == BattleState::defensing){
 
+    else if(state == BattleState::defending){
+        // need animation
+        for(auto& i : enemyList){
+            if(i->getCoolDown() == 0){
+                game->ref_playerHp() -= i->getAtk();
+                i->resetCoolDown();
+            }
+        }
+        state = BattleState::idle;
     }
+}
+
+QList<Enemy *> &Battle::getEnemyList()
+{
+    return enemyList;
+}
+
+bool Battle::getBulletGoing() const
+{
+    return bulletGoing;
+}
+
+void Battle::setBulletGoing(bool newBulletGoing)
+{
+    bulletGoing = newBulletGoing;
+}
+
+void Battle::setEnemyAlive(int index, bool newdead)
+{
+    enemyAlive[index] = newdead;
 }
 
 
@@ -60,6 +118,7 @@ void Battle::start()
         enemyList.push_back(e);
         e->setPos(arra.placementCord);
         game->getScene()->addItem(e);
+        enemyAlive.push_back(true);
     }
 }
 
@@ -118,4 +177,16 @@ void Battle::setArrangement(QList<arrangementInfo> arra)
 {
     arrangement = arra;
 }
+
+void Battle::fireBullet(int index, Enemy *target, int dmg, Attribute attribute)
+{
+    QPointF startloc = game->getCharacterSlot()->getSlot()[index]->pos();
+    startloc.setX(startloc.x() + CharacterWidth / 2);
+    startloc.setY(startloc.y() + CharacterHeight / 2);
+    Bullet* bullet = new Bullet(dmg, attribute);
+    QPointF endloc = QPointF(target->x() + target->boundingRect().width()/2, target->y() + target->boundingRect().height()/2);
+    bullet->setPos(startloc);
+    bullet->setTarget(endloc);
+}
+
 

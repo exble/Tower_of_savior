@@ -12,8 +12,11 @@ public:
 
     CharacterType getType() const;
 
+    Attribute getAttribute() const;
+
 private:
     CharacterType type;
+    Attribute attribute;
     QColor color;
 };
 

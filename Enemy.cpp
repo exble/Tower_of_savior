@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "StatusBar.h"
 #include "Game.h"
+#include "Battle.h"
 
 using namespace Constants;
 
@@ -11,7 +12,7 @@ Enemy::Enemy(MonsterType type)
     switch(type){
     case MonsterType::WaterSlime:
         setPixmap(QPixmap(":/enemy/dataset/enemy/96n.png"));
-        attribute = MonsterAttribute::water;
+        attribute = Attribute::Water;
         color = Qt::cyan;
         max_hp = 100;
         max_coolDown = 3;
@@ -19,7 +20,7 @@ Enemy::Enemy(MonsterType type)
         break;
     case MonsterType::EarthSlime:
         setPixmap(QPixmap(":/enemy/dataset/enemy/100n.png"));
-        attribute = MonsterAttribute::earth;
+        attribute = Attribute::Earth;
         color = Qt::green;
         max_hp = 100;
         max_coolDown = 3;
@@ -27,7 +28,7 @@ Enemy::Enemy(MonsterType type)
         break;
     case MonsterType::FireSlime:
         setPixmap(QPixmap(":/enemy/dataset/enemy/98n.png"));
-        attribute = MonsterAttribute::fire;
+        attribute = Attribute::Fire;
         color = Qt::red;
         max_hp = 100;
         max_coolDown = 3;
@@ -35,7 +36,7 @@ Enemy::Enemy(MonsterType type)
         break;
     case MonsterType::LightSlime:
         setPixmap(QPixmap(":/enemy/dataset/enemy/102n.png"));
-        attribute = MonsterAttribute::light;
+        attribute = Attribute::Light;
         color = Qt::yellow;
         max_hp = 100;
         max_coolDown = 3;
@@ -43,7 +44,7 @@ Enemy::Enemy(MonsterType type)
         break;
     case MonsterType::DarkSlime:
         setPixmap(QPixmap(":/enemy/dataset/enemy/104n.png"));
-        attribute = MonsterAttribute::dark;
+        attribute = Attribute::Dark;
         color = Qt::magenta;
         max_hp = 100;
         max_coolDown = 3;
@@ -51,7 +52,7 @@ Enemy::Enemy(MonsterType type)
         break;
     case MonsterType::Duck:
         setPixmap(QPixmap(":/enemy/dataset/enemy/267n.png"));
-        attribute = MonsterAttribute::earth;
+        attribute = Attribute::Earth;
         color = Qt::green;
         max_hp = 300;
         max_coolDown = 3;
@@ -59,7 +60,7 @@ Enemy::Enemy(MonsterType type)
         break;
     case MonsterType::HellHound:
         setPixmap(QPixmap(":/enemy/dataset/enemy/180n.png"));
-        attribute = MonsterAttribute::fire;
+        attribute = Attribute::Fire;
         color = Qt::red;
         max_hp = 700;
         max_coolDown = 3;
@@ -83,11 +84,24 @@ Enemy::Enemy(MonsterType type)
     game->getScene()->addItem(CD_textBox);
 }
 
+Enemy::~Enemy()
+{
+    healthBar->remove();
+    game->getScene()->removeItem(CD_textBox);
+    delete CD_textBox;
+
+    game->getCurrentBattle()->getEnemyList().removeOne(this);
+}
+
 void Enemy::update()
 {
     updateTextBox();
     healthBar->setValue(hp);
     healthBar->setPos(this->x(), this->y() + boundingRect().height() + HealthBarHeight);
+
+    if(hp == 0){
+        this->remove();
+    }
 }
 
 void Enemy::updateTextBox()
@@ -95,4 +109,41 @@ void Enemy::updateTextBox()
     CD_text = "CD " + std::to_string(coolDown);
     CD_textBox->setPlainText(CD_text.c_str());
     CD_textBox->setPos(this->x(), CDTextBoxY);
+}
+
+int Enemy::getAtk() const
+{
+    return atk;
+}
+
+void Enemy::setCoolDown(int newCoolDown)
+{
+    coolDown = newCoolDown;
+}
+
+void Enemy::resetCoolDown()
+{
+    coolDown = max_coolDown;
+}
+
+int Enemy::getCoolDown() const
+{
+    return coolDown;
+}
+
+Attribute Enemy::getAttribute() const
+{
+    return attribute;
+}
+
+int Enemy::getHp()const
+{
+    return hp;
+}
+
+void Enemy::minusHp(int val)
+{
+    hp -= val;
+    if(hp < 0)
+        hp = 0;
 }

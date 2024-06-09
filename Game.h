@@ -30,7 +30,7 @@ public:
     QList<TickListener*> TickListeners;
     RuneBoard *getBoard() const;
     Battle *getCurrentBattle() const;
-
+    int& ref_playerHp();
     CharacterSlot *getCharacterSlot() const;
 
 private:

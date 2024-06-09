@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Battle.cpp \
+    Bullet.cpp \
     Character.cpp \
     CharacterSlot.cpp \
     CheckBoard.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
 
 HEADERS += \
     Battle.h \
+    Bullet.h \
     Character.h \
     CharacterSlot.h \
     CheckBoard.h \

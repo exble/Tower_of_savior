@@ -126,6 +126,11 @@ Battle *Game::getCurrentBattle() const
     return currentBattle;
 }
 
+int &Game::ref_playerHp()
+{
+    return playerHp;
+}
+
 CharacterSlot *Game::getCharacterSlot() const
 {
     return characterSlot;

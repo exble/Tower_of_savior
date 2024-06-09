@@ -12,6 +12,18 @@ class StatusBar;
 class Enemy: public Object{
 public:
     Enemy(MonsterType type);
+    ~Enemy();
+    int getHp() const;
+    void minusHp(int val);
+    Attribute getAttribute() const;
+
+    int getCoolDown() const;
+
+    void setCoolDown(int newCoolDown);
+    void resetCoolDown();
+
+    int getAtk() const;
+
 private:
     void update();
     void updateTextBox();
@@ -19,7 +31,7 @@ private:
     StatusBar* healthBar = nullptr;
     QGraphicsTextItem* CD_textBox = nullptr;
     MonsterType type;
-    MonsterAttribute attribute;
+    Attribute attribute;
     std::string CD_text;
     QColor color;
     int atk = 0;

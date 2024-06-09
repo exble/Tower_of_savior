@@ -19,6 +19,8 @@ public:
     // max_slot = 6
     const std::array<Character*, 6>& getSlot() const;
     std::array<QGraphicsTextItem*, 6>& getTextSlot();
+    void clearTextSlot();
+
 private:
     void update();
 private:

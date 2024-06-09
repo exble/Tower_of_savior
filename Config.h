@@ -44,15 +44,17 @@ namespace Constants{
     inline constexpr int SpiningTime = 10000;
 
     inline constexpr int AccumulateTime = 500;
-    inline constexpr int AttackSepTime = 100;
+    inline constexpr int AttackSepTime = 200;
+    inline constexpr int BulletupdateCount = AttackSepTime / (1000 / TickPerSec);
 
     inline constexpr int CDTextBoxY = 200;
     inline constexpr int HealthBarHeight = 8;
+    inline constexpr double PI = 3.141592653589793238;
 
 }
 
 // debug settings
 #define DEBUG_REMOVE 0
-#define DEBUG_MOUSE 0
+#define DEBUG_MOUSE 1
 
 #endif // CONFIG_H
