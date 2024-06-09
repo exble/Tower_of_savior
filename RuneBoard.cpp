@@ -40,6 +40,7 @@ RuneBoard::RuneBoard()
     // Initialize combo count and text item
     comboCnt = 0;
     comboTextItem = new QGraphicsTextItem();
+    comboTextItem->setZValue(1000);
     comboTextItem->setDefaultTextColor(Qt::yellow);
     comboTextItem->setFont(QFont("Times New Roman", 40));
     comboTextItem->setPos(GameWidth - 100, GameHeight - 50); // Position in the bottom-right corner

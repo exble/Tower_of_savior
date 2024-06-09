@@ -95,7 +95,7 @@ void Battle::update()
     else if(state == BattleState::defending){
         // need animation
         for(auto& i : enemyList){
-            if(i->getCoolDown() == 0){
+            if(i->getCoolDown() == 0 && i->getHp() != 0){
                 game->ref_playerHp() -= i->getAtk();
                 i->resetCoolDown();
             }
