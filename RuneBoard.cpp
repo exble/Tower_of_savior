@@ -38,7 +38,7 @@ RuneBoard::RuneBoard()
     updatePosition();
 
     // Initialize combo count and text item
-    comboCount = 0;
+    comboCnt = 0;
     comboTextItem = new QGraphicsTextItem();
     comboTextItem->setDefaultTextColor(Qt::yellow);
     comboTextItem->setFont(QFont("Times New Roman", 40));
@@ -54,10 +54,10 @@ void RuneBoard::handleLinking()
         runes[cord.x()][cord.y()]->remove();
         runes[cord.x()][cord.y()] = nullptr;
     }
-    comboCount++; // Increment combo count
+    comboCnt++; // Increment combo count
 
-    if (comboCount > 1) { // Only show combo text if combo count is greater than 1
-        comboTextItem->setHtml(QString("<span style='font-size:48px;'>%1</span> <span style='font-size:32px;'>combo!</span>").arg(comboCount)); // Update text item
+    if (comboCnt > 1) { // Only show combo text if combo count is greater than 1
+        comboTextItem->setHtml(QString("<span style='font-size:48px;'>%1</span> <span style='font-size:32px;'>combo!</span>").arg(comboCnt)); // Update text item
         comboTextItem->setPos(GameWidth - comboTextItem->boundingRect().width() - 10, GameHeight - comboTextItem->boundingRect().height() - 10); // Adjust position based on text size
         comboTextItem->setVisible(true); // Show the combo text item
     }
@@ -78,7 +78,6 @@ void RuneBoard::triggerLinking()
     game->getPlayerBar()->displayHp();
 
     atkinfo.clear();
-    comboCount = 0; // Reset combo count
     comboTextItem->setVisible(false); // Hide the combo text item when resetting combo count
 }
 
@@ -87,19 +86,17 @@ void RuneBoard::update()
 {
     if(state == RuneBoardState::inactive){
         setRunesOpacity(0.5);
-        comboCount = 0; // Reset combo count
         comboTextItem->setVisible(false); // Hide the combo text item
     }
     else if(state == RuneBoardState::waiting){
         setRunesOpacity(1);
         clusters.clear();
         CountDownTimer->start(SpiningTime);
-        comboCount = 0; // Reset combo count
         comboTextItem->setVisible(false); // Hide the combo text item
     }
     else if(state == RuneBoardState::spinning){
         linking_index = 0;
-
+        comboCnt = 0;
         // dealing countdown & update the bar
         handleSpinning();
     }
@@ -112,7 +109,6 @@ void RuneBoard::update()
                 }
                 game->getCurrentBattle()->playerAttack(atkinfo);
                 comboTextItem->setVisible(false); // Hide the combo text item when attack is done
-                comboCount = 0; // Reset combo count
             }
             else{
                 state = RuneBoardState::dropping;

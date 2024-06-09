@@ -36,9 +36,6 @@ private:
     void triggerSpining(QPoint index);
     void setRunesOpacity(float opacity);
 
-    int comboCount;
-        QGraphicsTextItem* comboTextItem;
-
     static Rune* getRandRune();
     static QPoint CordToIndex(QPointF point);
     static QPointF IndexToCord(QPoint point);
@@ -53,6 +50,7 @@ private:
     QGraphicsPixmapItem* dummy_rune = nullptr;
     Rune* holding_rune = nullptr;
     CheckBoard* backBoard = nullptr;
+    QGraphicsTextItem* comboTextItem;
     attackInfo atkinfo;
     int comboCnt = 0;
     int linking_index = 0;
