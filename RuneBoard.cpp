@@ -59,7 +59,7 @@ void RuneBoard::update()
             if(linking_index == 0){
                 state = RuneBoardState::inactive;
                 for(int i = 0; i < RuneTypeCount; i++){
-                    atkinfo[(RuneType)i] = atkinfo[(RuneType)i] * comboCnt;
+                    atkinfo[(RuneType)i] = atkinfo[(RuneType)i] * comboCnt * Multiplier;
                 }
                 game->getCurrentBattle()->playerAttack(atkinfo);
             }

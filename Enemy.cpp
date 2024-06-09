@@ -99,7 +99,7 @@ void Enemy::update()
     healthBar->setValue(hp);
     healthBar->setPos(this->x(), this->y() + boundingRect().height() + HealthBarHeight);
 
-    if(hp == 0){
+    if(hp <= 0){
         this->remove();
     }
 }

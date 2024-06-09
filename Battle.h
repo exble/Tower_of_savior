@@ -19,14 +19,15 @@ public:
     void end();
     void triggerCountDown();
     void playerAttack(attackInfo info);
-    void enemyAttack();
-    void passRound();
     void setArrangement(QList<arrangementInfo> arra);
     void fireBullet(int index, Enemy* target, int dmg, Attribute attrbute);
     bool getBulletGoing() const;
     void setBulletGoing(bool newBulletGoing);
     void setEnemyAlive(int index, bool newdead);
     QList<Enemy *> &getEnemyList();
+
+    bool getIsFinish() const;
+    void setIsFinish(bool newIsFinish);
 
 private:
     void update();
@@ -42,6 +43,7 @@ private:
     BattleState state;
     attackInfo atkinfo;
     int atk_index = 0;
+    bool isFinish = false;
 };
 
 #endif // BATTLE_H

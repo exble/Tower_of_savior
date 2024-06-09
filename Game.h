@@ -31,7 +31,10 @@ public:
     RuneBoard *getBoard() const;
     Battle *getCurrentBattle() const;
     int& ref_playerHp();
+    void nextBattle();
     CharacterSlot *getCharacterSlot() const;
+private:
+    void initBattles();
 
 private:
     QTimer* tick;
@@ -43,7 +46,9 @@ private:
     CharacterSlot* characterSlot;
     std::array<Battle*, 3> battles;
     Battle* currentBattle;
-    int playerHp;
+    QTimer* battletimer;
+    int playerHp = 0;
+    int BattleIndex = 0;
 
 private slots:
     void update();

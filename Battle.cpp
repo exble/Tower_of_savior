@@ -90,6 +90,16 @@ void Battle::update()
     }
 }
 
+bool Battle::getIsFinish() const
+{
+    return isFinish;
+}
+
+void Battle::setIsFinish(bool newIsFinish)
+{
+    isFinish = newIsFinish;
+}
+
 QList<Enemy *> &Battle::getEnemyList()
 {
     return enemyList;
@@ -124,10 +134,7 @@ void Battle::start()
 
 void Battle::end()
 {
-    foreach(Enemy* e, enemyList){
-        game->getScene()->removeItem(e);
-        e->remove();
-    }
+
 }
 
 void Battle::triggerCountDown()
@@ -160,16 +167,6 @@ void Battle::playerAttack(attackInfo info)
             break;
         }
     }
-
-}
-
-void Battle::enemyAttack()
-{
-
-}
-
-void Battle::passRound()
-{
 
 }
 

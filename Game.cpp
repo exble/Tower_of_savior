@@ -31,6 +31,10 @@ void Game::start()
     tick->start(1000.0/TickPerSec);
     connect(tick, SIGNAL(timeout()), this, SLOT(update()));
 
+    // init battle timer
+    battletimer = new QTimer;
+    battletimer->setSingleShot(true);
+
     // init MouseMove
     mousemove = new MouseMove();
 
@@ -50,34 +54,11 @@ void Game::start()
     characterSlot->setCharacter(5, CharacterType::Fire);
     characterSlot->updatePosition();
 
-    // init Battles
-    arrangementInfo info;
-    QList<arrangementInfo> infos;
+    initBattles();
 
-    for(int i = 0; i < 3; i++){
-        battles[i] = new Battle();
-    }
-
-    currentBattle = battles[0];
-
-    // Battle one
-    info.type = MonsterType::WaterSlime;
-    info.placementCord = QPoint(60, 200);
-    infos.push_back(info);
-
-    info.type = MonsterType::FireSlime;
-    info.placementCord = QPoint(210, 200);
-    infos.push_back(info);
-
-    info.type = MonsterType::EarthSlime;
-    info.placementCord = QPoint(360, 200);
-    infos.push_back(info);
-
-    battles[0]->setArrangement(infos);
+    currentBattle = battles[BattleIndex];
 
     currentBattle->start();
-    // Battles two
-
 
     playerHp = PlayerMaxHP;
 }
@@ -87,6 +68,16 @@ void Game::update()
     // update all TickListeners
     foreach(TickListener* tick_reader, TickListeners){
         tick_reader->update_handler();
+    }
+
+    if(currentBattle->getEnemyList().size() == 0){
+        if(currentBattle->getIsFinish() == false){
+            currentBattle->setIsFinish(true);
+            battletimer->start(BattleSwapDelay);
+        }
+        else if(currentBattle->getIsFinish() && !battletimer->isActive()){
+            nextBattle();
+        }
     }
 
 }
@@ -131,9 +122,68 @@ int &Game::ref_playerHp()
     return playerHp;
 }
 
+void Game::nextBattle()
+{
+    BattleIndex++;
+    currentBattle = battles[BattleIndex];
+    currentBattle->start();
+}
+
 CharacterSlot *Game::getCharacterSlot() const
 {
     return characterSlot;
+}
+
+void Game::initBattles()
+{
+    // init Battles
+    arrangementInfo info;
+    QList<arrangementInfo> infos;
+
+    for(int i = 0; i < 3; i++){
+        battles[i] = new Battle();
+    }
+
+    // Battle one
+    info.type = MonsterType::WaterSlime;
+    info.placementCord = QPoint(60, 200);
+    infos.push_back(info);
+
+    info.type = MonsterType::FireSlime;
+    info.placementCord = QPoint(210, 200);
+    infos.push_back(info);
+
+    info.type = MonsterType::EarthSlime;
+    info.placementCord = QPoint(360, 200);
+    infos.push_back(info);
+
+    battles[0]->setArrangement(infos);
+
+    // Battle two
+    infos.clear();
+
+    info.type = MonsterType::LightSlime;
+    info.placementCord = QPoint(60, 200);
+    infos.push_back(info);
+
+    info.type = MonsterType::Duck;
+    info.placementCord = QPoint(210, 200);
+    infos.push_back(info);
+
+    info.type = MonsterType::DarkSlime;
+    info.placementCord = QPoint(360, 200);
+    infos.push_back(info);
+
+    battles[1]->setArrangement(infos);
+
+    // Battle three
+    infos.clear();
+
+    info.type = MonsterType::HellHound;
+    info.placementCord = QPoint(140, 100);
+    infos.push_back(info);
+
+    battles[2]->setArrangement(infos);
 }
 
 
