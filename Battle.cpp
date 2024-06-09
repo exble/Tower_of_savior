@@ -16,6 +16,18 @@ Battle::Battle()
     timer->setSingleShot(true);
     attackTimer = new QTimer();
     attackTimer->setSingleShot(true);
+    healTimer = new QTimer();
+    healTimer->setSingleShot(true);
+
+    healtext = new QGraphicsTextItem();
+    healtext->setPos(GameWidth/2 - 50, RuneAreaY - PlayerBarHeight);
+    healtext->setDefaultTextColor(Qt::green);
+    QFont font;
+    font.setBold(true);
+    font.setPixelSize(22);
+    healtext->setFont(font);
+    healtext->setZValue(500);
+    game->getScene()->addItem(healtext);
 }
 
 Battle::~Battle()
@@ -50,12 +62,25 @@ void Battle::update()
     }
     else if(state == BattleState::healing){
         // need animation
-
-        game->ref_playerHp() += atkinfo[RuneType::heart] * 5;
-        if(game->ref_playerHp() > PlayerMaxHP){
-            game->ref_playerHp() = PlayerMaxHP;
+        if(atkinfo[RuneType::heart] == 0){
+            state = BattleState::attacking;
         }
-        state = BattleState::attacking;
+        else if(!healTimer->isActive() && !isHealingActive){
+            healTimer->start(Healingdelay);
+            isHealingActive = true;
+            game->ref_playerHp() += atkinfo[RuneType::heart] * 5;
+            if(game->ref_playerHp() > PlayerMaxHP){
+                game->ref_playerHp() = PlayerMaxHP;
+            }
+            healtext->setVisible(true);
+            healtext->setPlainText(("+" + std::to_string(atkinfo[RuneType::heart] * 5)).c_str());
+        }
+        else if(!healTimer->isActive() && isHealingActive){
+            state = BattleState::attacking;
+            isHealingActive = false;
+            healtext->setVisible(false);
+        }
+
     }
     else if(state == BattleState::attacking){
         if(atk_index == 6){

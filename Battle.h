@@ -5,6 +5,7 @@
 #include "enum.h"
 #include "Config.h"
 
+#include <QGraphicsTextItem>
 #include <QPoint>
 #include <QTimer>
 #include <array>
@@ -34,11 +35,14 @@ private:
 private:
     QList<arrangementInfo> arrangement;
     std::array<int, 6> attackOfEachSlot;
+    QGraphicsTextItem* healtext;
     QList<Enemy*> enemyList;
     QList<bool> enemyAlive;
     std::string str;
     QTimer* timer = nullptr;
     QTimer* attackTimer = nullptr;
+    QTimer* healTimer;
+    bool isHealingActive = false;
     bool bulletGoing = false;
     BattleState state;
     attackInfo atkinfo;
