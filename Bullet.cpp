@@ -44,6 +44,7 @@ void Bullet::update()
             remove();
         }
     }
+    checkOutOfBound();
     move();
 }
 
@@ -80,5 +81,14 @@ void Bullet::dealDamage(Enemy *enemy)
 
     enemy->minusHp(final_dmg);
 }
+
+void Bullet::checkOutOfBound()
+{
+    if(x() < 0 || x() > GameWidth || y() < 0 || y() > GameHeight){
+        remove();
+    }
+}
+
+
 
 

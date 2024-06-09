@@ -15,6 +15,7 @@ public:
 private:
     void update();
     void dealDamage(Enemy* enemy);
+    void checkOutOfBound();
 private:
     QList<QGraphicsItem*> colliders;
     QPointF target;
