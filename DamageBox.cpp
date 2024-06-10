@@ -36,5 +36,5 @@ void DamageBox::update()
         remove();
     }
     setPos(x(), y() - DamageFloatingSpeed);
-    setOpacity((float)(DamageFloatingTime - timer->remainingTime()) / DamageFloatingTime);
+    setOpacity((float)(timer->remainingTime()) / DamageFloatingTime);
 }

@@ -19,7 +19,7 @@ private:
 private:
     QList<QGraphicsItem*> colliders;
     QPointF target;
-
+    QColor color;
     int dmg = 0;
     Attribute attribute;
 };

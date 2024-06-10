@@ -16,6 +16,25 @@ Bullet::Bullet(int dmg, Attribute attribute)
     setPixmap(QPixmap(":/other/dataset/other/bullet.png"));
     game->getScene()->addItem(this);
     setZValue(100);
+
+    switch(attribute){
+    case Attribute::Water:
+        color = Qt::cyan;
+        break;
+    case Attribute::Fire:
+        color = Qt::red;
+        break;
+    case Attribute::Earth:
+        color = Qt::green
+;        break;
+    case Attribute::Light:
+        color = Qt::yellow;
+        break;
+    case Attribute::Dark:
+        color = Qt::magenta;
+        break;
+
+    }
 }
 
 Bullet::~Bullet()
@@ -82,7 +101,7 @@ void Bullet::dealDamage(Enemy *enemy)
 
 
 
-    DamageBox* db = new DamageBox(final_dmg, enemy->getColor(), QPointF(enemy->x() + enemy->boundingRect().width()/2 - 50, y()));
+    DamageBox* db = new DamageBox(final_dmg, color, QPointF(enemy->x() + enemy->boundingRect().width()/2 - this->boundingRect().width()/2, y() - this->boundingRect().height()));
 
     enemy->minusHp(final_dmg);
 }
