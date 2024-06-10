@@ -18,6 +18,8 @@ public:
     RuneBoardState getState() const;
     void setState(RuneBoardState state);
     QTimer *getCountDownTimer() const;
+    Rune* getRune(int x, int y);
+    void setFire(bool sel);
 private:
     void update();
     void MousePressEvent(const QGraphicsSceneMouseEvent* event);
@@ -36,6 +38,7 @@ private:
     void triggerSpining(QPoint index);
     void setRunesOpacity(float opacity);
 
+
     static Rune* getRandRune();
     static QPoint CordToIndex(QPointF point);
     static QPointF IndexToCord(QPoint point);
@@ -52,6 +55,7 @@ private:
     CheckBoard* backBoard = nullptr;
     QGraphicsTextItem* comboTextItem;
     attackInfo atkinfo;
+    bool enebleFire = false;
     int comboCnt = 0;
     int linking_index = 0;
     int attack = 0;

@@ -10,6 +10,9 @@ public:
     RuneType getType() const;
     RuneState getState() const;
 
+    void setState(RuneState newState);
+    void newImage();
+
 private:
     void update();
     RuneType type;

@@ -199,6 +199,6 @@ void Game::setBackgroundImage(const QString &imagePath)
     QPixmap backgroundPixmap(imagePath);
     backgroundItem->setPixmap(backgroundPixmap);
     backgroundItem->setPos(0, 0);
-    backgroundItem->setZValue(-1); // Ensure the background is behind other items
+    backgroundItem->setZValue(-1000); // Ensure the background is behind other items
 }
 

@@ -124,10 +124,34 @@ void Battle::update()
                 game->ref_playerHp() -= i->getAtk();
                 i->resetCoolDown();
             }
+            if(i->getType() == MonsterType::Duck && i->getHp() != 0){
+                transformWeath();
+                transformWeath();
+            }
         }
+
         state = BattleState::idle;
         game->getBoard()->setState(RuneBoardState::waiting);
     }
+}
+
+void Battle::transformWeath()
+{
+    std::vector<QPoint> normalList;
+    // all weathered check
+    for(int i = 0; i < RuneCountX; i++){
+        for(int j = 0; j < RuneCountY; j++){
+            if(game->getBoard()->getRune(i, j)->getState() == RuneState::normal){
+                normalList.push_back(QPoint(i, j));
+                break;
+            }
+        }
+    }
+    if(normalList.size() == 0){
+        return;
+    }
+    int r = rand() % normalList.size();
+    game->getBoard()->getRune(normalList[r].x(), normalList[r].y())->setState(RuneState::weathered);
 }
 
 bool Battle::getIsFinish() const

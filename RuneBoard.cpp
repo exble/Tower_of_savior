@@ -261,6 +261,10 @@ void RuneBoard::handleSpinning()
         triggerLinking();
         return;
     }
+    if(holding_rune->getState() == RuneState::weathered){
+        triggerLinking();
+        return;
+    }
     QPointF final_pos;
     QPointF rectified_mouse_cord;
 
@@ -300,6 +304,9 @@ void RuneBoard::handleSpinning()
     if(rune_index != dummy_index){
         std::swap(runes[rune_index.x()][rune_index.y()], runes[dummy_index.x()][dummy_index.y()]);
         updatePosition();
+        if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
+            triggerLinking();
+        }
     }
 }
 
@@ -346,6 +353,17 @@ void RuneBoard::setRunesOpacity(float opacity)
             runes[i][j]->setOpacity(opacity);
         }
     }
+}
+
+Rune *RuneBoard::getRune(int x, int y)
+{
+    assert((x >= 0 && x < RuneCountX && y >= 0 || y < RuneCountY) && "Index Out of Range");
+    return runes[x][y];
+}
+
+void RuneBoard::setFire(bool sel)
+{
+    enebleFire = sel;
 }
 
 void RuneBoard::setState(RuneBoardState _state)

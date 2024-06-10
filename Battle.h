@@ -36,6 +36,7 @@ public:
 
 private:
     void update();
+    void transformWeath();
 private:
     QList<arrangementInfo> arrangement;
     std::array<int, 6> attackOfEachSlot;

@@ -26,6 +26,8 @@ public:
 
     const QColor &getColor() const;
 
+    MonsterType getType() const;
+
 private:
     void update();
     void updateTextBox();

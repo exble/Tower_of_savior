@@ -3,6 +3,32 @@
 Rune::Rune(RuneType type, RuneState state)
     :type(type), state(state)
 {
+    newImage();
+}
+
+RuneType Rune::getType() const
+{
+    return type;
+}
+
+RuneState Rune::getState() const
+{
+    return state;
+}
+
+void Rune::update()
+{
+    move();
+}
+
+void Rune::setState(RuneState newState)
+{
+    state = newState;
+    newImage();
+}
+
+void Rune::newImage()
+{
     switch (type) {
     case RuneType::fire:
         if(state == RuneState::normal){
@@ -73,19 +99,4 @@ Rune::Rune(RuneType type, RuneState state)
     default:
         break;
     }
-}
-
-RuneType Rune::getType() const
-{
-    return type;
-}
-
-RuneState Rune::getState() const
-{
-    return state;
-}
-
-void Rune::update()
-{
-    move();
 }

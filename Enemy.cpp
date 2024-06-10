@@ -8,6 +8,7 @@ using namespace Constants;
 extern Game* game;
 
 Enemy::Enemy(MonsterType type)
+    :type(type)
 {
     switch(type){
     case MonsterType::WaterSlime:
@@ -107,6 +108,11 @@ void Enemy::updateTextBox()
     CD_text = "CD " + std::to_string(coolDown);
     CD_textBox->setPlainText(CD_text.c_str());
     CD_textBox->setPos(this->x(), CDTextBoxY);
+}
+
+MonsterType Enemy::getType() const
+{
+    return type;
 }
 
 const QColor &Enemy::getColor() const
