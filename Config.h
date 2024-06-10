@@ -49,6 +49,9 @@ namespace Constants{
     inline constexpr int BattleSwapDelay = 500;
     inline constexpr int Healingdelay = 500;
 
+    inline constexpr int DamageFloatingTime = 1500;
+    inline constexpr int DamageFloatingSpeed = 1;
+
     inline constexpr int CDTextBoxY = 180;
     inline constexpr int HealthBarHeight = 8;
     inline constexpr double PI = 3.141592653589793238;

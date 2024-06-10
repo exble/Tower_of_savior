@@ -24,6 +24,8 @@ public:
 
     int getAtk() const;
 
+    const QColor &getColor() const;
+
 private:
     void update();
     void updateTextBox();

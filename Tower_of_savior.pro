@@ -14,6 +14,7 @@ SOURCES += \
     Character.cpp \
     CharacterSlot.cpp \
     CheckBoard.cpp \
+    DamageBox.cpp \
     Enemy.cpp \
     Game.cpp \
     MouseListener.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     CharacterSlot.h \
     CheckBoard.h \
     Config.h \
+    DamageBox.h \
     Enemy.h \
     Game.h \
     MouseListener.h \

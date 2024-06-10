@@ -3,6 +3,7 @@
 #include "Config.h"
 #include "Game.h"
 #include "Battle.h"
+#include "DamageBox.h"
 
 #include <math.h>
 
@@ -78,6 +79,10 @@ void Bullet::dealDamage(Enemy *enemy)
     else{
         final_dmg = dmg;
     }
+
+
+
+    DamageBox* db = new DamageBox(final_dmg, enemy->getColor(), QPointF(enemy->x() + enemy->boundingRect().width()/2 - 50, y()));
 
     enemy->minusHp(final_dmg);
 }

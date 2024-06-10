@@ -109,6 +109,11 @@ void Enemy::updateTextBox()
     CD_textBox->setPos(this->x(), CDTextBoxY);
 }
 
+const QColor &Enemy::getColor() const
+{
+    return color;
+}
+
 int Enemy::getAtk() const
 {
     return atk;
