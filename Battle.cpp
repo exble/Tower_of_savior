@@ -48,7 +48,7 @@ void Battle::update()
         if(!timer->isActive()){
             state = BattleState::healing;
             atk_index = 0;
-            game->getBoard()->setState(RuneBoardState::waiting);
+            game->getBoard()->setState(RuneBoardState::inactive);
             attackTimer->start(AttackSepTime);
         }
         else{
@@ -126,6 +126,7 @@ void Battle::update()
             }
         }
         state = BattleState::idle;
+        game->getBoard()->setState(RuneBoardState::waiting);
     }
 }
 
