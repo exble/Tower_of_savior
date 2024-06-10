@@ -72,6 +72,12 @@ Enemy::Enemy(MonsterType type)
     healthBar = new StatusBar(boundingRect().width(), HealthBarHeight, max_hp);
     healthBar->setColor(color);
 
+    healthBarBackGround = new QGraphicsRectItem();
+    healthBarBackGround->setBrush(QBrush(Qt::black));
+    healthBarBackGround->setRect(healthBar->boundingRect());
+    healthBarBackGround->setZValue(-1);
+    game->getScene()->addItem(healthBarBackGround);
+
     hp = max_hp;
 
     CD_textBox = new QGraphicsTextItem();
@@ -83,6 +89,8 @@ Enemy::Enemy(MonsterType type)
     CD_textBox->setDefaultTextColor(Qt::white);
     coolDown = max_coolDown;
 
+
+
     game->getScene()->addItem(CD_textBox);
 }
 
@@ -92,6 +100,9 @@ Enemy::~Enemy()
     game->getScene()->removeItem(CD_textBox);
     delete CD_textBox;
 
+    game->getScene()->removeItem(healthBarBackGround);
+    delete healthBarBackGround;
+
     game->getCurrentBattle()->getEnemyList().removeOne(this);
 }
 
@@ -100,6 +111,8 @@ void Enemy::update()
     updateTextBox();
     healthBar->setValue(hp);
     healthBar->setPos(this->x(), this->y() + boundingRect().height() + HealthBarHeight);
+
+    healthBarBackGround->setPos(healthBar->pos());
 
 }
 

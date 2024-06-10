@@ -34,6 +34,7 @@ private:
 private:
     StatusBar* healthBar = nullptr;
     QGraphicsTextItem* CD_textBox = nullptr;
+    QGraphicsRectItem* healthBarBackGround = nullptr;
     MonsterType type;
     Attribute attribute;
     std::string CD_text;
