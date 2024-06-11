@@ -44,4 +44,9 @@
         <file>dataset/other/background2.png</file>
         <file>dataset/other/background3.png</file>
     </qresource>
+    <qresource prefix="/audio">
+        <file>dataset/audio/BATTLE_ELEMENTAL.wav</file>
+        <file>dataset/audio/Rune.wav</file>
+        <file>dataset/audio/BATTLE_ELEMENTAL.wmv</file>
+    </qresource>
 </RCC>
