@@ -83,7 +83,9 @@ void RuneBoard::triggerLinking()
 
     for(int i = 0; i < RuneCountX; i++){
         for(int j = 0; j < RuneCountY; j++){
-            runes[i][j]->setState(RuneState::normal);
+            if(runes[i][j]->getState() == RuneState::burning){
+                runes[i][j]->setState(RuneState::normal);
+            }
         }
     }
 }
