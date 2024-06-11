@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QObject>
 #include <QGraphicsPixmapItem>
+#include "BGM.h"  
 
 class RuneBoard;
 class Object;
@@ -18,7 +19,7 @@ class Battle;
 class NotifyWindow;
 class SettingButton;
 
-class Game: public QObject{
+class Game : public QObject {
     Q_OBJECT
 public:
     Game() = default;
@@ -31,12 +32,13 @@ public:
     QList<Object*> Object_list;
     QList<MouseListener*> MouseListeners;
     QList<TickListener*> TickListeners;
-    RuneBoard *getBoard() const;
-    Battle *getCurrentBattle() const;
+    RuneBoard* getBoard() const;
+    Battle* getCurrentBattle() const;
     int& ref_playerHp();
     void nextBattle();
-    CharacterSlot *getCharacterSlot() const;
+    CharacterSlot* getCharacterSlot() const;
     void setBackgroundImage(const QString &imagePath);
+
     void showLose();
     void showWin();
     void showSurrender();
@@ -66,6 +68,7 @@ private:
     int playerHp = 0;
     int BattleIndex = 0;
     QGraphicsPixmapItem* backgroundItem;
+    BGM* bgm;  
 
 private slots:
     void update();
