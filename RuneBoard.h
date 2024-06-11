@@ -65,6 +65,9 @@ private:
 
     QPointF mouse_cord;
     QSoundEffect swapSoundEffect;
+    QSoundEffect combo1SoundEffect;
+    QSoundEffect combo2SoundEffect;
+    QSoundEffect combo3SoundEffect;
 };
 
 #endif // RUNEBOARD_H

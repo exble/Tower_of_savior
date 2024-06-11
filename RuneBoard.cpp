@@ -48,6 +48,9 @@ RuneBoard::RuneBoard()
 
     // 初始化音效
     swapSoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/Rune.wav"));
+    combo1SoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/cluster1.wav"));
+    combo2SoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/cluster2.wav"));
+    combo3SoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/cluster3.wav"));
 }
 
 void RuneBoard::handleLinking()
@@ -58,6 +61,15 @@ void RuneBoard::handleLinking()
         runes[cord.x()][cord.y()] = nullptr;
     }
     comboCnt++; // Increment combo count
+    if(comboCnt == 1){
+        combo1SoundEffect.play();
+    }
+    else if(comboCnt == 2){
+        combo2SoundEffect.play();
+    }
+    else{
+        combo3SoundEffect.play();
+    }
 
     if (comboCnt > 1) { // Only show combo text if combo count is greater than 1
         comboTextItem->setHtml(QString("<span style='font-size:48px;'>%1</span> <span style='font-size:32px;'>combo!</span>").arg(comboCnt)); // Update text item
@@ -77,7 +89,6 @@ void RuneBoard::triggerLinking()
     checkLink();
     makeCluster();
     timer->start(LinkingCD);
-
     game->getPlayerBar()->displayHp();
 
     atkinfo.clear();
@@ -319,6 +330,7 @@ void RuneBoard::handleSpinning()
         updatePosition();
         // 播放音效
         swapSoundEffect.play();
+
         if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
             triggerLinking();
         }
