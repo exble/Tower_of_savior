@@ -49,5 +49,6 @@
         <file>dataset/audio/BATTLE_ELEMENTAL.wav</file>
         <file>dataset/audio/Rune.wav</file>
         <file>dataset/audio/BATTLE_ELEMENTAL.wmv</file>
+        <file>dataset/audio/BOSS_ELEMENTAL.wav</file>
     </qresource>
 </RCC>

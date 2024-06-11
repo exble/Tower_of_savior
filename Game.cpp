@@ -9,7 +9,7 @@
 #include "Battle.h"
 #include "NotifyWindow.h"
 #include "SettingButton.h"
-#include "BGM.h"  
+#include "BGM.h"  // Include the BGM header file
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
@@ -156,6 +156,13 @@ void Game::nextBattle()
     currentBattle = battles[BattleIndex];
     currentBattle->start();
     setBackgroundImage(currentBattle->getBackgroundImagePath());
+
+    // Change background music for Battle Three
+    if (BattleIndex == 2) {
+        bgm->playBackgroundMusic("qrc:/audio/dataset/audio/BOSS_ELEMENTAL.wav");
+    } else {
+        bgm->playBackgroundMusic("qrc:/audio/dataset/audio/BATTLE_ELEMENTAL.wav");
+    }
 }
 
 CharacterSlot* Game::getCharacterSlot() const
