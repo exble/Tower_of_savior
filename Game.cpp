@@ -7,10 +7,12 @@
 #include "CharacterSlot.h"
 #include "Enemy.h"
 #include "Battle.h"
+#include "BGM.h"  
 
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
+#include <QUrl>
 
 using namespace Constants;
 
@@ -32,7 +34,7 @@ void Game::start()
 
     // init game tick
     tick = new QTimer();
-    tick->start(1000.0/TickPerSec);
+    tick->start(1000.0 / TickPerSec);
     connect(tick, SIGNAL(timeout()), this, SLOT(update()));
 
     // init battle timer
@@ -67,25 +69,28 @@ void Game::start()
     currentBattle->start();
 
     playerHp = PlayerMaxHP;
+
+    // init BGM
+    bgm = new BGM(this);
+    bgm->playBackgroundMusic("qrc:/audio/dataset/audio/BATTLE_ELEMENTAL.wav");
 }
 
 void Game::update()
 {
     // update all TickListeners
-    foreach(TickListener* tick_reader, TickListeners){
+    foreach (TickListener* tick_reader, TickListeners) {
         tick_reader->update_handler();
     }
 
-    if(currentBattle->getEnemyList().size() == 0){
-        if(currentBattle->getIsFinish() == false){
+    if (currentBattle->getEnemyList().size() == 0) {
+        if (currentBattle->getIsFinish() == false) {
             currentBattle->setIsFinish(true);
             battletimer->start(BattleSwapDelay);
         }
-        else if(currentBattle->getIsFinish() && !battletimer->isActive()){
+        else if (currentBattle->getIsFinish() && !battletimer->isActive()) {
             nextBattle();
         }
     }
-
 }
 
 QTimer* Game::getTick() const
@@ -93,17 +98,17 @@ QTimer* Game::getTick() const
     return tick;
 }
 
-QGraphicsScene *Game::getScene() const
+QGraphicsScene* Game::getScene() const
 {
     return scene;
 }
 
-QGraphicsView *Game::getView() const
+QGraphicsView* Game::getView() const
 {
     return view;
 }
 
-PlayerStatusBar *Game::getPlayerBar() const
+PlayerStatusBar* Game::getPlayerBar() const
 {
     return PlayerBar;
 }
@@ -113,17 +118,17 @@ int Game::getPlayerHp() const
     return playerHp;
 }
 
-RuneBoard *Game::getBoard() const
+RuneBoard* Game::getBoard() const
 {
     return board;
 }
 
-Battle *Game::getCurrentBattle() const
+Battle* Game::getCurrentBattle() const
 {
     return currentBattle;
 }
 
-int &Game::ref_playerHp()
+int& Game::ref_playerHp()
 {
     return playerHp;
 }
@@ -136,7 +141,7 @@ void Game::nextBattle()
     setBackgroundImage(currentBattle->getBackgroundImagePath());
 }
 
-CharacterSlot *Game::getCharacterSlot() const
+CharacterSlot* Game::getCharacterSlot() const
 {
     return characterSlot;
 }
@@ -147,7 +152,7 @@ void Game::initBattles()
     arrangementInfo info;
     QList<arrangementInfo> infos;
 
-    for(int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++) {
         battles[i] = new Battle();
     }
 
@@ -199,16 +204,15 @@ void Game::initBattles()
 void Game::setPlayerHp(int newPlayerHp)
 {
     playerHp = newPlayerHp;
-    if(playerHp < 0){
+    if (playerHp < 0) {
         playerHp = 0;
     }
 }
 
-void Game::setBackgroundImage(const QString &imagePath)
+void Game::setBackgroundImage(const QString& imagePath)
 {
     QPixmap backgroundPixmap(imagePath);
     backgroundItem->setPixmap(backgroundPixmap);
     backgroundItem->setPos(0, 0);
     backgroundItem->setZValue(-1000); // Ensure the background is behind other items
 }
-
