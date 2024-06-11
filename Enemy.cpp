@@ -64,7 +64,7 @@ Enemy::Enemy(MonsterType type)
         attribute = Attribute::Fire;
         color = Qt::red;
         max_hp = 700;
-        max_coolDown = 3;
+        max_coolDown = 5;
         atk = 400;
         break;
     }
