@@ -9,9 +9,18 @@ BGM::BGM(QObject* parent) : QObject(parent)
 
 void BGM::playBackgroundMusic(const QString &audioPath)
 {
-    musicPlayer->setMedia(QUrl(audioPath));
-    musicPlayer->setVolume(50);  // Set volume as desired
+    if (currentAudioPath != audioPath) {
+        musicPlayer->stop();
+        currentAudioPath = audioPath;
+        musicPlayer->setMedia(QUrl(audioPath));
+    }
+    musicPlayer->setVolume(50);  // Set volume
     musicPlayer->play();
+}
+
+void BGM::stopBackgroundMusic()
+{
+    musicPlayer->stop();
 }
 
 void BGM::onMediaStatusChanged(QMediaPlayer::MediaStatus status)
