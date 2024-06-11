@@ -10,12 +10,14 @@ class BGM : public QObject
 public:
     BGM(QObject* parent = nullptr);
     void playBackgroundMusic(const QString &audioPath);
+    void stopBackgroundMusic();
 
 private slots:
     void onMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
 private:
     QMediaPlayer* musicPlayer;
+    QString currentAudioPath;
 };
 
 #endif // BGM_H
