@@ -6,6 +6,7 @@
 
 
 class Enemy;
+class DamageBox;
 
 class Bullet: public Object{
 public:
@@ -20,6 +21,7 @@ private:
     QList<QGraphicsItem*> colliders;
     QPointF target;
     QColor color;
+    DamageBox* db;
     int dmg = 0;
     Attribute attribute;
 };

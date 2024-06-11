@@ -49,6 +49,12 @@ namespace Constants{
     inline constexpr int BattleSwapDelay = 500;
     inline constexpr int Healingdelay = 500;
 
+    inline constexpr int ButtonWidth = 300;
+    inline constexpr int ButtonHeight = 80;
+
+    inline constexpr int NotifyWindowWidth = GameWidth;
+    inline constexpr int NotifyWindowHeight = GameHeight/3;
+
     inline constexpr int DamageFloatingTime = 1500;
     inline constexpr int DamageFloatingSpeed = 1;
 

@@ -19,10 +19,12 @@ SOURCES += \
     Game.cpp \
     MouseListener.cpp \
     MouseMove.cpp \
+    NotifyWindow.cpp \
     Object.cpp \
     PlayerStatusBar.cpp \
     Rune.cpp \
     RuneBoard.cpp \
+    SettingButton.cpp \
     StatusBar.cpp \
     TickListener.cpp \
     TitleScreen.cpp \
@@ -40,10 +42,12 @@ HEADERS += \
     Game.h \
     MouseListener.h \
     MouseMove.h \
+    NotifyWindow.h \
     Object.h \
     PlayerStatusBar.h \
     Rune.h \
     RuneBoard.h \
+    SettingButton.h \
     StatusBar.h \
     TickListener.h \
     TitleScreen.h \

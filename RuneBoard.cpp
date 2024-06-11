@@ -34,8 +34,8 @@ RuneBoard::RuneBoard()
     CountDownTimer = new QTimer();
     CountDownTimer->setSingleShot(true);
 
-    initBoard();
-    updatePosition();
+    resetBoard();
+
 
     // Initialize combo count and text item
     comboCnt = 0;
@@ -222,6 +222,7 @@ void RuneBoard::checkLink()
 
 void RuneBoard::makeCluster()
 {
+    clusters.clear();
     QList<QList<QPoint>> tmp_clusters;
     std::function<void(int, RuneType, int, int)>traverse;
     traverse = [&](int index, RuneType prev_type, int x, int y){
@@ -367,15 +368,48 @@ void RuneBoard::setRunesOpacity(float opacity)
     }
 }
 
+void RuneBoard::preLink()
+{
+    checkLink();
+    makeCluster();
+    while(clusters.size() > 0){
+        foreach(QList<QPoint> points, clusters){
+            foreach(QPoint p, points){
+                runes[p.x()][p.y()]->remove();
+                runes[p.x()][p.y()] = getRandRune();
+                game->getScene()->addItem(runes[p.x()][p.y()]);
+            }
+        }
+
+        checkLink();
+        makeCluster();
+    }
+
+}
+
 Rune *RuneBoard::getRune(int x, int y)
 {
-    assert((x >= 0 && x < RuneCountX && y >= 0 || y < RuneCountY) && "Index Out of Range");
+    assert((x >= 0 && x < RuneCountX && y >= 0 && y < RuneCountY) && "Index Out of Range");
     return runes[x][y];
 }
 
 void RuneBoard::setFire(bool sel)
 {
     enebleFire = sel;
+}
+
+void RuneBoard::resetBoard()
+{
+    for(int i = 0; i < RuneCountX; i++){
+        for(int j = 0; j < RuneCountY; j++){
+            if(runes[i][j]){
+                runes[i][j]->remove();
+            }
+        }
+    }
+    initBoard();
+    preLink();
+    updatePosition();
 }
 
 void RuneBoard::setState(RuneBoardState _state)

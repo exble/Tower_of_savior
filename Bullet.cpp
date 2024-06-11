@@ -99,9 +99,7 @@ void Bullet::dealDamage(Enemy *enemy)
         final_dmg = dmg;
     }
 
-
-
-    DamageBox* db = new DamageBox(final_dmg, color, QPointF(enemy->x() + enemy->boundingRect().width()/2 - this->boundingRect().width()/2, y() - this->boundingRect().height()));
+    db = new DamageBox(final_dmg, color, QPointF(enemy->x() + enemy->boundingRect().width()/2 - this->boundingRect().width()/2, y() - this->boundingRect().height()));
 
     enemy->minusHp(final_dmg);
 }

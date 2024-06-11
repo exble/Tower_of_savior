@@ -43,5 +43,6 @@
         <file>dataset/other/background1.png</file>
         <file>dataset/other/background2.png</file>
         <file>dataset/other/background3.png</file>
+        <file>dataset/other/SettingButton.png</file>
     </qresource>
 </RCC>

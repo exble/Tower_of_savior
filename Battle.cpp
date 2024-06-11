@@ -210,7 +210,9 @@ void Battle::start()
 
 void Battle::end()
 {
-
+    foreach(Enemy* e, enemyList){
+        e->remove();
+    }
 }
 
 void Battle::triggerCountDown()

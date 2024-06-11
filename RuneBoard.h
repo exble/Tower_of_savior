@@ -20,6 +20,7 @@ public:
     QTimer *getCountDownTimer() const;
     Rune* getRune(int x, int y);
     void setFire(bool sel);
+    void resetBoard();
 private:
     void update();
     void MousePressEvent(const QGraphicsSceneMouseEvent* event);
@@ -37,6 +38,7 @@ private:
     void triggerLinking();
     void triggerSpining(QPoint index);
     void setRunesOpacity(float opacity);
+    void preLink();
 
 
     static Rune* getRandRune();

@@ -7,6 +7,8 @@
 #include "CharacterSlot.h"
 #include "Enemy.h"
 #include "Battle.h"
+#include "NotifyWindow.h"
+#include "SettingButton.h"
 
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
@@ -58,7 +60,14 @@ void Game::start()
     characterSlot->setCharacter(5, CharacterType::Fire);
     characterSlot->updatePosition();
 
+    //init setting button
+    sb = new SettingButton();
+    sb->setPos(GameWidth - sb->boundingRect().width(), 0);
+    scene->addItem(sb);
+
     initBattles();
+
+    initWindows();
 
     BattleIndex = 0;
 
@@ -84,6 +93,15 @@ void Game::update()
         else if(currentBattle->getIsFinish() && !battletimer->isActive()){
             nextBattle();
         }
+    }
+
+    if(BattleIndex == 3){
+        showWin();
+        board->setState(RuneBoardState::inactive);
+    }
+    if(playerHp == 0){
+        showLose();
+        board->setState(RuneBoardState::inactive);
     }
 
 }
@@ -196,6 +214,55 @@ void Game::initBattles()
     battles[2]->setBackgroundImagePath(":/other/dataset/other/background3.png"); // Set background image path for battle three
 }
 
+void Game::initWindows()
+{
+    // init Surrender
+    SurrenderWindow = new NotifyWindow();
+
+    Button* b = new Button("Surrender", Qt::black, Qt::white, SurrenderWindow);
+    b->setFunction(&Game::showLose);
+    b->setPos(100, 300);
+    b->positionCenter();
+    SurrenderWindow->addButton(b);
+
+    b = new Button("Go Back", Qt::blue, Qt::white, SurrenderWindow);
+    b->setFunction(&Game::goBack);
+    b->setPos(100, 500);
+    b->positionCenter();
+    SurrenderWindow->addButton(b);
+
+    //init win
+    winWindow = new NotifyWindow();
+
+    b = new Button("You Win!", Qt::transparent, Qt::black, winWindow);
+    b->setPos(200, 300);
+    b->positionCenter();
+    b->setBackGround(false);
+    winWindow->addButton(b);
+
+    b = new Button("Restart", Qt::blue, Qt::white, winWindow);
+    b->setFunction(&Game::Restart);
+    b->setPos(200, 500);
+    b->positionCenter();
+    winWindow->addButton(b);
+
+    //init Lose
+    loseWindow = new NotifyWindow();
+
+    b = new Button("You Lose!", Qt::transparent, Qt::black, winWindow);
+    b->setPos(200, 300);
+    b->positionCenter();
+    b->setBackGround(false);
+    loseWindow->addButton(b);
+
+    b = new Button("Restart", Qt::blue, Qt::white, winWindow);
+    b->setFunction(&Game::Restart);
+    b->setPos(200, 500);
+    b->positionCenter();
+    loseWindow->addButton(b);
+
+}
+
 void Game::setPlayerHp(int newPlayerHp)
 {
     playerHp = newPlayerHp;
@@ -210,5 +277,50 @@ void Game::setBackgroundImage(const QString &imagePath)
     backgroundItem->setPixmap(backgroundPixmap);
     backgroundItem->setPos(0, 0);
     backgroundItem->setZValue(-1000); // Ensure the background is behind other items
+}
+
+void Game::showLose()
+{
+    if(SurrenderWindow->getIsActive()){
+        SurrenderWindow->hide();
+    }
+    loseWindow->show();
+}
+
+void Game::showWin()
+{
+    if(SurrenderWindow->getIsActive()){
+        SurrenderWindow->hide();
+    }
+    winWindow->show();
+}
+
+void Game::showSurrender()
+{
+    if(board->getState() == RuneBoardState::waiting){
+        SurrenderWindow->show();
+        board->setState(RuneBoardState::inactive);
+    }
+
+}
+
+void Game::Restart()
+{
+    playerHp = PlayerMaxHP;
+    board->resetBoard();
+    currentBattle->end();
+    BattleIndex = -1;
+    currentBattle = battles[BattleIndex];
+    nextBattle();
+    winWindow->hide();
+    loseWindow->hide();
+    SurrenderWindow->hide();
+    board->setState(RuneBoardState::waiting);
+}
+
+void Game::goBack()
+{
+    SurrenderWindow->hide();
+    board->setState(RuneBoardState::waiting);
 }
 
