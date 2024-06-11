@@ -145,11 +145,6 @@ Battle* Game::getCurrentBattle() const
     return currentBattle;
 }
 
-int& Game::ref_playerHp()
-{
-    return playerHp;
-}
-
 void Game::nextBattle()
 {
     BattleIndex++;
@@ -279,6 +274,9 @@ void Game::setPlayerHp(int newPlayerHp)
     playerHp = newPlayerHp;
     if (playerHp < 0) {
         playerHp = 0;
+    }
+    if(playerHp > PlayerMaxHP){
+        playerHp = PlayerMaxHP;
     }
 }
 

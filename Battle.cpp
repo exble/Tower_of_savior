@@ -63,10 +63,12 @@ void Battle::update()
         }
         else{
             auto text_slot = game->getCharacterSlot()->getTextSlot();
+            auto slot = game->getCharacterSlot()->getSlot();
             for(size_t i = 0; i < text_slot.size(); i++){
                 int the_value = attackOfEachSlot[i] * ((float)(AccumulateTime - timer->remainingTime()) / AccumulateTime);
                 str = std::to_string(the_value);
                 text_slot[i]->setPlainText(str.c_str());
+                text_slot[i]->setX(slot[i]->x() + slot[i]->boundingRect().width()/2 - text_slot[i]->boundingRect().width()/2);
             }
         }
     }
@@ -78,10 +80,7 @@ void Battle::update()
         else if(!healTimer->isActive() && !isHealingActive){
             healTimer->start(Healingdelay);
             isHealingActive = true;
-            game->ref_playerHp() += atkinfo[RuneType::heart] * 5;
-            if(game->ref_playerHp() > PlayerMaxHP){
-                game->ref_playerHp() = PlayerMaxHP;
-            }
+            game->setPlayerHp(game->getPlayerHp() + atkinfo[RuneType::heart] * 5) ;
             healtext->setVisible(true);
             healtext->setPlainText(("+" + std::to_string(atkinfo[RuneType::heart] * 5)).c_str());
         }
@@ -131,7 +130,7 @@ void Battle::update()
         // need animation
         for(auto& i : enemyList){
             if(i->getCoolDown() == 0 && i->getHp() != 0){
-                game->ref_playerHp() -= i->getAtk();
+                game->setPlayerHp(game->getPlayerHp() - i->getAtk());
                 i->resetCoolDown();
             }
             if(i->getType() == MonsterType::Duck && i->getHp() != 0){

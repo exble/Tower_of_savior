@@ -46,7 +46,7 @@ void CharacterSlot::updatePosition()
 {
     for(int i = 0; i < max_slot; i++){
         slot[i]->setPos(slot_x + i*CharacterWidth, slot_y);
-        text_slot[i]->setPos(slot_x + i*CharacterWidth + 0.3* CharacterWidth, slot_y + 20);
+        text_slot[i]->setPos(slot[i]->x() + slot[i]->boundingRect().center().x() - text_slot[i]->boundingRect().x()/2, slot_y + 20);
     }
 }
 

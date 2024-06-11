@@ -34,7 +34,6 @@ public:
     QList<TickListener*> TickListeners;
     RuneBoard* getBoard() const;
     Battle* getCurrentBattle() const;
-    int& ref_playerHp();
     void nextBattle();
     CharacterSlot* getCharacterSlot() const;
     void setBackgroundImage(const QString &imagePath);

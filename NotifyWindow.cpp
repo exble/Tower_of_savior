@@ -39,7 +39,7 @@ void Button::setFunction(void (Game::*newFunc)())
 void Button::positionCenter()
 {
     setPos(parent->boundingRect().center().x() - this->boundingRect().width() / 2, y());
-    textbox->setPos(this->boundingRect().center().x() + x() - textbox->boundingRect().width() / 2, this->y());
+    textbox->setPos(this->boundingRect().center().x() + x() - textbox->boundingRect().width() / 2, this->boundingRect().center().y() + y() - textbox->boundingRect().height()/2);
 }
 
 void Button::setBackGround(bool sel)
