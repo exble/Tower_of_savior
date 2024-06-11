@@ -6,7 +6,7 @@
 #include <QTimer>
 #include <QObject>
 #include <QGraphicsPixmapItem>
-#include "BGM.h"  
+#include "BGM.h"  // Include the BGM header file
 
 class RuneBoard;
 class Object;
@@ -55,7 +55,7 @@ private:
     int playerHp = 0;
     int BattleIndex = 0;
     QGraphicsPixmapItem* backgroundItem;
-    BGM* bgm;  
+    BGM* bgm;  // Add BGM member
 
 private slots:
     void update();
