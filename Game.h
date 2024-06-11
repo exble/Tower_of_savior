@@ -36,6 +36,8 @@ public:
     CharacterSlot *getCharacterSlot() const;
     void setBackgroundImage(const QString &imagePath);
 
+    void setPlayerHp(int newPlayerHp);
+
 private:
     void initBattles();
 

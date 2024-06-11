@@ -60,6 +60,8 @@ void Game::start()
 
     initBattles();
 
+    BattleIndex = 0;
+
     currentBattle = battles[BattleIndex];
 
     currentBattle->start();
@@ -192,6 +194,14 @@ void Game::initBattles()
 
     battles[2]->setArrangement(infos);
     battles[2]->setBackgroundImagePath(":/other/dataset/other/background3.png"); // Set background image path for battle three
+}
+
+void Game::setPlayerHp(int newPlayerHp)
+{
+    playerHp = newPlayerHp;
+    if(playerHp < 0){
+        playerHp = 0;
+    }
 }
 
 void Game::setBackgroundImage(const QString &imagePath)

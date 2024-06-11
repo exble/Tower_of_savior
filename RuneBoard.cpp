@@ -80,6 +80,12 @@ void RuneBoard::triggerLinking()
 
     atkinfo.clear();
     comboTextItem->setVisible(false); // Hide the combo text item when resetting combo count
+
+    for(int i = 0; i < RuneCountX; i++){
+        for(int j = 0; j < RuneCountY; j++){
+            runes[i][j]->setState(RuneState::normal);
+        }
+    }
 }
 
 
@@ -302,10 +308,16 @@ void RuneBoard::handleSpinning()
     QPoint dummy_index = CordToIndex(rectified_mouse_cord);
 
     if(rune_index != dummy_index){
+        if(runes[dummy_index.x()][dummy_index.y()]->getState() == RuneState::burning){
+            game->setPlayerHp(game->getPlayerHp() - 30);
+        }
         std::swap(runes[rune_index.x()][rune_index.y()], runes[dummy_index.x()][dummy_index.y()]);
         updatePosition();
         if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
             triggerLinking();
+        }
+        if(enebleFire){
+            runes[rune_index.x()][rune_index.y()]->setState(RuneState::burning);
         }
     }
 }

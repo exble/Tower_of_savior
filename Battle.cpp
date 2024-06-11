@@ -27,6 +27,9 @@ Battle::Battle()
     font.setPixelSize(22);
     healtext->setFont(font);
     healtext->setZValue(500);
+
+    state = BattleState::idle;
+
     game->getScene()->addItem(healtext);
 }
 
@@ -42,7 +45,14 @@ void Battle::update()
             if(e->getHp() <= 0){
                 e->remove();
             }
+            if(e->getType() == MonsterType::HellHound && e->getHp() != 0){
+                game->getBoard()->setFire(true);
+            }
+            else{
+                game->getBoard()->setFire(false);
+            }
         }
+
     }
     else if(state == BattleState::accumulating){
         if(!timer->isActive()){
@@ -128,6 +138,7 @@ void Battle::update()
                 transformWeath();
                 transformWeath();
             }
+
         }
 
         state = BattleState::idle;
