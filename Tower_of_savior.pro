@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    BGM.cpp \
     Battle.cpp \
     Bullet.cpp \
     Character.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    BGM.h \
     Battle.h \
     Bullet.h \
     Character.h \
