@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "PlayerStatusBar.h"
 #include "Battle.h"
-
+#include <QSoundEffect>
 #include <QDebug>
 
 extern Game* game;
@@ -36,7 +36,6 @@ RuneBoard::RuneBoard()
 
     resetBoard();
 
-
     // Initialize combo count and text item
     comboCnt = 0;
     comboTextItem = new QGraphicsTextItem();
@@ -46,6 +45,9 @@ RuneBoard::RuneBoard()
     comboTextItem->setPos(GameWidth - 100, GameHeight - 50); // Position in the bottom-right corner
     comboTextItem->setVisible(false); // Initially hide the combo text item
     game->getScene()->addItem(comboTextItem);
+
+    // 初始化音效
+    swapSoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/Rune.wav"));
 }
 
 void RuneBoard::handleLinking()
@@ -306,7 +308,6 @@ void RuneBoard::handleSpinning()
     dummy_rune->setOpacity(DummyOpacity);
     dummy_rune->setPos(final_pos);
 
-
     QPoint rune_index = CordToIndex(holding_rune->pos());
     QPoint dummy_index = CordToIndex(rectified_mouse_cord);
 
@@ -316,6 +317,8 @@ void RuneBoard::handleSpinning()
         }
         std::swap(runes[rune_index.x()][rune_index.y()], runes[dummy_index.x()][dummy_index.y()]);
         updatePosition();
+        // 播放音效
+        swapSoundEffect.play();
         if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
             triggerLinking();
         }
@@ -481,7 +484,3 @@ QTimer *RuneBoard::getCountDownTimer() const
 {
     return CountDownTimer;
 }
-
-
-
-
