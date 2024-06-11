@@ -4,7 +4,7 @@
 #include "TickListener.h"
 #include "MouseListener.h"
 #include "Rune.h"
-
+#include <QSoundEffect>
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
 #include <QTimer>
@@ -64,6 +64,7 @@ private:
     int healing = 0;
 
     QPointF mouse_cord;
+    QSoundEffect swapSoundEffect;
 };
 
 #endif // RUNEBOARD_H
