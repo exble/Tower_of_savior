@@ -50,5 +50,8 @@
         <file>dataset/audio/Rune.wav</file>
         <file>dataset/audio/BATTLE_ELEMENTAL.wmv</file>
         <file>dataset/audio/BOSS_ELEMENTAL.wav</file>
+        <file>dataset/audio/cluster1.wav</file>
+        <file>dataset/audio/cluster2.wav</file>
+        <file>dataset/audio/cluster3.wav</file>
     </qresource>
 </RCC>

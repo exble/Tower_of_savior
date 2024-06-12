@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "PlayerStatusBar.h"
 #include "Battle.h"
-
+#include <QSoundEffect>
 #include <QDebug>
 
 extern Game* game;
@@ -36,7 +36,6 @@ RuneBoard::RuneBoard()
 
     resetBoard();
 
-
     // Initialize combo count and text item
     comboCnt = 0;
     comboTextItem = new QGraphicsTextItem();
@@ -46,6 +45,12 @@ RuneBoard::RuneBoard()
     comboTextItem->setPos(GameWidth - 100, GameHeight - 50); // Position in the bottom-right corner
     comboTextItem->setVisible(false); // Initially hide the combo text item
     game->getScene()->addItem(comboTextItem);
+
+    // 初始化音效
+    swapSoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/Rune.wav"));
+    combo1SoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/cluster1.wav"));
+    combo2SoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/cluster2.wav"));
+    combo3SoundEffect.setSource(QUrl("qrc:/audio/dataset/audio/cluster3.wav"));
 }
 
 void RuneBoard::handleLinking()
@@ -56,6 +61,15 @@ void RuneBoard::handleLinking()
         runes[cord.x()][cord.y()] = nullptr;
     }
     comboCnt++; // Increment combo count
+    if(comboCnt == 1){
+        combo1SoundEffect.play();
+    }
+    else if(comboCnt == 2){
+        combo2SoundEffect.play();
+    }
+    else{
+        combo3SoundEffect.play();
+    }
 
     if (comboCnt > 1) { // Only show combo text if combo count is greater than 1
         comboTextItem->setHtml(QString("<span style='font-size:48px;'>%1</span> <span style='font-size:32px;'>combo!</span>").arg(comboCnt)); // Update text item
@@ -75,7 +89,6 @@ void RuneBoard::triggerLinking()
     checkLink();
     makeCluster();
     timer->start(LinkingCD);
-
     game->getPlayerBar()->displayHp();
 
     atkinfo.clear();
@@ -306,7 +319,6 @@ void RuneBoard::handleSpinning()
     dummy_rune->setOpacity(DummyOpacity);
     dummy_rune->setPos(final_pos);
 
-
     QPoint rune_index = CordToIndex(holding_rune->pos());
     QPoint dummy_index = CordToIndex(rectified_mouse_cord);
 
@@ -316,6 +328,9 @@ void RuneBoard::handleSpinning()
         }
         std::swap(runes[rune_index.x()][rune_index.y()], runes[dummy_index.x()][dummy_index.y()]);
         updatePosition();
+        // 播放音效
+        swapSoundEffect.play();
+
         if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
             triggerLinking();
         }
@@ -481,7 +496,3 @@ QTimer *RuneBoard::getCountDownTimer() const
 {
     return CountDownTimer;
 }
-
-
-
-
