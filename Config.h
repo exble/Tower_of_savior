@@ -70,7 +70,7 @@ namespace Constants{
     inline constexpr double PI = 3.141592653589793238;
 
     // default to 1
-    inline constexpr float Multiplier = 1;
+    inline constexpr float Multiplier = 7;
 
 }
 

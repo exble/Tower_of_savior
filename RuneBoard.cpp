@@ -333,7 +333,8 @@ void RuneBoard::handleSpinning()
         swapSoundEffect.play();
         if(enebleFire){
             if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
-                game->PlayerHpMinus(300);
+                game->PlayerHpMinus(100);
+                runes[rune_index.x()][rune_index.y()]->setState(RuneState::normal);
                 triggerLinking();
             }
             else{
@@ -342,7 +343,8 @@ void RuneBoard::handleSpinning()
         }
         else{
             if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
-                game->PlayerHpMinus(300);
+                game->PlayerHpMinus(100);
+                runes[rune_index.x()][rune_index.y()]->setState(RuneState::normal);
                 triggerLinking();
             }
         }
