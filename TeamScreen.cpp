@@ -157,7 +157,7 @@ void TeamMouseMove::mousePressEvent(QGraphicsSceneMouseEvent *event)
     qDebug() << "gotoTitle";
 #endif
     }
-    if (cord.x() > 347 && cord.x() < 534 && cord.y() > 764 && cord.y() < 842 ) {
+    if (cord.x() > 347 && cord.x() < 534 && cord.y() > 764 && cord.y() < 842 && game->member.size() == 6) {
 
 #if DEBUG_SCREEN
     qDebug() << "gotoReady";
