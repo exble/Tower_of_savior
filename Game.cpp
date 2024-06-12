@@ -9,6 +9,7 @@
 #include "Battle.h"
 #include "NotifyWindow.h"
 #include "SettingButton.h"
+#include "DamageBox.h"
 #include "BGM.h"  // Include the BGM header file
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
@@ -278,6 +279,18 @@ void Game::setPlayerHp(int newPlayerHp)
     if(playerHp > PlayerMaxHP){
         playerHp = PlayerMaxHP;
     }
+}
+
+void Game::PlayerHpMinus(int minusHp)
+{
+
+    db = new DamageBox(minusHp, Qt::red, QPointF(PlayerBarWidth/2-30, PlayerBar->pos().y()));
+
+    playerHp -= minusHp;
+    if(playerHp < 0){
+        playerHp = 0;
+    }
+
 }
 
 void Game::setBackgroundImage(const QString& imagePath)

@@ -78,6 +78,9 @@ Enemy::Enemy(MonsterType type)
     healthBarBackGround->setZValue(-1);
     game->getScene()->addItem(healthBarBackGround);
 
+    movementTimer = new QTimer();
+    movementTimer->setSingleShot(true);
+
     hp = max_hp;
 
     CD_textBox = new QGraphicsTextItem();
@@ -89,7 +92,10 @@ Enemy::Enemy(MonsterType type)
     CD_textBox->setDefaultTextColor(Qt::white);
     coolDown = max_coolDown;
 
+    movementTimer = new QTimer();
+    movementTimer->setSingleShot(true);
 
+    state = MonsterState::None;
 
     game->getScene()->addItem(CD_textBox);
 }
@@ -108,12 +114,36 @@ Enemy::~Enemy()
 
 void Enemy::update()
 {
+    if(isAttacking){
+        if(state == MonsterState::backing){
+            if(movementTimer->isActive()){
+                setPos(x(), y() - MonsterBackingSpeed);
+            }
+            else{
+                state = MonsterState::forwarding;
+                movementTimer->start(MonsterForwardTime);
+            }
+        }
+        else if(state == MonsterState::forwarding){
+            if(movementTimer->isActive()){
+                setPos(x(), y() + MonsterForwardSpeed);
+            }
+            else{
+                state = MonsterState::None;
+                isAttacking = false;
+                game->PlayerHpMinus(atk);
+                coolDown = max_coolDown;
+                game->getCurrentBattle()->setEnemyAttacking(false);
+            }
+        }
+    }
+
+
     updateTextBox();
     healthBar->setValue(hp);
     healthBar->setPos(this->x(), this->y() + boundingRect().height() + HealthBarHeight);
 
     healthBarBackGround->setPos(healthBar->pos());
-
 }
 
 void Enemy::updateTextBox()
@@ -146,6 +176,13 @@ void Enemy::setCoolDown(int newCoolDown)
 void Enemy::resetCoolDown()
 {
     coolDown = max_coolDown;
+}
+
+void Enemy::attack()
+{
+    isAttacking = true;
+    state = MonsterState::backing;
+    movementTimer->start(MonsterBackingTime);
 }
 
 int Enemy::getCoolDown() const

@@ -58,6 +58,13 @@ namespace Constants{
     inline constexpr int DamageFloatingTime = 1500;
     inline constexpr int DamageFloatingSpeed = 1;
 
+    inline constexpr int MonsterAttackDelay = 600;
+
+    inline constexpr int MonsterBackingTime = 600;
+    inline constexpr float MonsterBackingSpeed = 0.5;
+    inline constexpr int MonsterForwardTime = 100;
+    inline constexpr float MonsterForwardSpeed = 3;
+
     inline constexpr int CDTextBoxY = 180;
     inline constexpr int HealthBarHeight = 8;
     inline constexpr double PI = 3.141592653589793238;

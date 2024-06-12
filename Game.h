@@ -18,6 +18,7 @@ class CharacterSlot;
 class Battle;
 class NotifyWindow;
 class SettingButton;
+class DamageBox;
 
 class Game : public QObject {
     Q_OBJECT
@@ -45,7 +46,7 @@ public:
     void goBack();
 
     void setPlayerHp(int newPlayerHp);
-
+    void PlayerHpMinus(int minusHp);
 private:
     void initBattles();
     void initWindows();
@@ -63,6 +64,7 @@ private:
     NotifyWindow* winWindow;
     NotifyWindow* loseWindow;
     SettingButton* sb;
+    DamageBox* db;
     QTimer* battletimer;
     int playerHp = 0;
     int BattleIndex = 0;

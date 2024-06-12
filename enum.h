@@ -66,6 +66,12 @@ enum class MonsterType{
     HellHound
 };
 
+enum class MonsterState{
+    None,
+    backing,
+    forwarding
+};
+
 struct arrangementInfo{
     MonsterType type;
     QPoint placementCord;

@@ -12,12 +12,15 @@ using namespace Constants;
 
 Battle::Battle()
 {
-    timer = new QTimer();
-    timer->setSingleShot(true);
+    accumulateTimer = new QTimer();
+    accumulateTimer->setSingleShot(true);
     attackTimer = new QTimer();
     attackTimer->setSingleShot(true);
     healTimer = new QTimer();
     healTimer->setSingleShot(true);
+    defenseTimer = new QTimer();
+    defenseTimer->setSingleShot(true);
+
 
     healtext = new QGraphicsTextItem();
     healtext->setPos(GameWidth/2 - 50, RuneAreaY - PlayerBarHeight);
@@ -28,9 +31,15 @@ Battle::Battle()
     healtext->setFont(font);
     healtext->setZValue(500);
 
+    dmgtext = new QGraphicsTextItem();
+    dmgtext->setPos(GameWidth/2 - 50, RuneAreaY - PlayerBarHeight);
+    dmgtext->setDefaultTextColor(Qt::red);
+    dmgtext->setFont(font);
+
     state = BattleState::idle;
 
     game->getScene()->addItem(healtext);
+    game->getScene()->addItem(dmgtext);
 }
 
 Battle::~Battle()
@@ -42,9 +51,7 @@ void Battle::update()
 {
     if(state == BattleState::idle){
         foreach(Enemy* e, enemyList){
-            if(e->getHp() <= 0){
-                e->remove();
-            }
+
             if(e->getType() == MonsterType::HellHound && e->getHp() != 0){
                 game->getBoard()->setFire(true);
             }
@@ -55,9 +62,10 @@ void Battle::update()
 
     }
     else if(state == BattleState::accumulating){
-        if(!timer->isActive()){
+        if(!accumulateTimer->isActive()){
             state = BattleState::healing;
             atk_index = 0;
+            monsterIndex = 0;
             game->getBoard()->setState(RuneBoardState::inactive);
             attackTimer->start(AttackSepTime);
         }
@@ -65,7 +73,7 @@ void Battle::update()
             auto text_slot = game->getCharacterSlot()->getTextSlot();
             auto slot = game->getCharacterSlot()->getSlot();
             for(size_t i = 0; i < text_slot.size(); i++){
-                int the_value = attackOfEachSlot[i] * ((float)(AccumulateTime - timer->remainingTime()) / AccumulateTime);
+                int the_value = attackOfEachSlot[i] * ((float)(AccumulateTime - accumulateTimer->remainingTime()) / AccumulateTime);
                 str = std::to_string(the_value);
                 text_slot[i]->setPlainText(str.c_str());
                 text_slot[i]->setX(slot[i]->x() + slot[i]->boundingRect().width()/2 - text_slot[i]->boundingRect().width()/2);
@@ -92,7 +100,7 @@ void Battle::update()
 
     }
     else if(state == BattleState::attacking){
-        if(atk_index == 6){
+        if(atk_index == 6 && !bulletGoing){
             state = BattleState::defending;
             for(auto& i : enemyList){
                 if(i->getCoolDown() > 0){
@@ -100,10 +108,20 @@ void Battle::update()
                 }
             }
             game->getCharacterSlot()->clearTextSlot();
+
+            attackList.clear();
+
+            foreach(Enemy* e, enemyList){
+                if(e->getHp() <= 0){
+                    e->remove();
+                }
+                else{
+                    attackList.push_back(e);
+                }
+            }
         }
         else if(!bulletGoing){
             if(attackOfEachSlot[atk_index] != 0){
-
                 int r = rand() % enemyList.size();
                 while (enemyList[r]->getHp() <= 0) {
                     r = rand() % enemyList.size();
@@ -127,21 +145,25 @@ void Battle::update()
     }
 
     else if(state == BattleState::defending){
-        // need animation
-        for(auto& i : enemyList){
-            if(i->getCoolDown() == 0 && i->getHp() != 0){
-                game->setPlayerHp(game->getPlayerHp() - i->getAtk());
-                i->resetCoolDown();
-            }
-            if(i->getType() == MonsterType::Duck && i->getHp() != 0){
-                transformWeath();
-                transformWeath();
-            }
 
+        if(monsterIndex == attackList.size()){
+            foreach(Enemy* e, enemyList){
+                if(e->getType() == MonsterType::Duck){
+                    transformWeath();
+                    transformWeath();
+                }
+            }
+            state = BattleState::idle;
+
+            game->getBoard()->setState(RuneBoardState::waiting);
         }
-
-        state = BattleState::idle;
-        game->getBoard()->setState(RuneBoardState::waiting);
+        else if (!enemyAttacking){
+            if(attackList[monsterIndex]->getCoolDown() == 0){
+                attackList[monsterIndex]->attack();
+                enemyAttacking = true;
+            }
+            monsterIndex++;
+        }
     }
 }
 
@@ -162,6 +184,16 @@ void Battle::transformWeath()
     }
     int r = rand() % normalList.size();
     game->getBoard()->getRune(normalList[r].x(), normalList[r].y())->setState(RuneState::weathered);
+}
+
+bool Battle::getEnemyAttacking() const
+{
+    return enemyAttacking;
+}
+
+void Battle::setEnemyAttacking(bool newEnemyAttacking)
+{
+    enemyAttacking = newEnemyAttacking;
 }
 
 bool Battle::getIsFinish() const
@@ -223,7 +255,7 @@ void Battle::playerAttack(attackInfo info)
 {
     state = BattleState::accumulating;
     atkinfo = info;
-    timer->start(AccumulateTime);
+    accumulateTimer->start(AccumulateTime);
     const auto slot = game->getCharacterSlot()->getSlot();
     for(size_t i = 0; i < slot.size(); i++) {
         switch(slot[i]->getType()){

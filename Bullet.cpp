@@ -107,6 +107,7 @@ void Bullet::dealDamage(Enemy *enemy)
 void Bullet::checkOutOfBound()
 {
     if(x() < 0 || x() > GameWidth || y() < 0 || y() > GameHeight){
+        game->getCurrentBattle()->setBulletGoing(false);
         remove();
     }
 }

@@ -21,7 +21,7 @@ public:
 
     void setCoolDown(int newCoolDown);
     void resetCoolDown();
-
+    void attack();
     int getAtk() const;
 
     const QColor &getColor() const;
@@ -37,8 +37,11 @@ private:
     QGraphicsRectItem* healthBarBackGround = nullptr;
     MonsterType type;
     Attribute attribute;
+    MonsterState state;
+    QTimer* movementTimer;
     std::string CD_text;
     QColor color;
+    bool isAttacking = false;
     int atk = 0;
     int hp = 0;
     int max_hp = 0;

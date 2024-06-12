@@ -34,24 +34,33 @@ public:
     void setBackgroundImagePath(const QString &path);
     QString getBackgroundImagePath() const;
 
+    bool getEnemyAttacking() const;
+    void setEnemyAttacking(bool newEnemyAttacking);
+    void transformWeath();
+
 private:
     void update();
-    void transformWeath();
+
 private:
     QList<arrangementInfo> arrangement;
     std::array<int, 6> attackOfEachSlot;
     QGraphicsTextItem* healtext;
+    QGraphicsTextItem* dmgtext;
     QList<Enemy*> enemyList;
+    QList<Enemy*> attackList;
     QList<bool> enemyAlive;
     std::string str;
-    QTimer* timer = nullptr;
+    QTimer* accumulateTimer = nullptr;
     QTimer* attackTimer = nullptr;
-    QTimer* healTimer;
+    QTimer* healTimer = nullptr;
+    QTimer* defenseTimer = nullptr;
     bool isHealingActive = false;
     bool bulletGoing = false;
+    bool enemyAttacking = false;
     BattleState state;
     attackInfo atkinfo;
     int atk_index = 0;
+    int monsterIndex = 0;
     bool isFinish = false;
     QString backgroundImagePath;
 };
