@@ -21,7 +21,6 @@ Battle::Battle()
     defenseTimer = new QTimer();
     defenseTimer->setSingleShot(true);
 
-
     healtext = new QGraphicsTextItem();
     healtext->setPos(GameWidth/2 - 50, RuneAreaY - PlayerBarHeight);
     healtext->setDefaultTextColor(Qt::green);

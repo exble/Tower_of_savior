@@ -16,6 +16,7 @@ public:
     void displayHp();
     void updateValue();
     void updateText();
+
 private:
     void update();
 private:

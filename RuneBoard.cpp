@@ -109,6 +109,7 @@ void RuneBoard::update()
     if(state == RuneBoardState::inactive){
         setRunesOpacity(0.5);
         comboTextItem->setVisible(false); // Hide the combo text item
+        dummy_rune->setOpacity(0);
     }
     else if(state == RuneBoardState::waiting){
         setRunesOpacity(1);

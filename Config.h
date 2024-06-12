@@ -77,6 +77,6 @@ namespace Constants{
 // debug settings
 #define DEBUG_REMOVE 0
 #define DEBUG_MOUSE 0
-#define DEBUG_SCREEN 1
+#define DEBUG_SCREEN 0
 
 #endif // CONFIG_H

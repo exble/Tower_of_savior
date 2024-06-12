@@ -64,10 +64,7 @@ void PlayerStatusBar::updateText()
 
 void PlayerStatusBar::update()
 {
-
     updateValue();
     updateText();
     resize();
 }
-
-

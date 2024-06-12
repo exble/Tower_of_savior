@@ -342,6 +342,7 @@ void Game::Restart()
     loseWindow->hide();
     SurrenderWindow->hide();
     board->setState(RuneBoardState::waiting);
+    PlayerBar->displayHp();
     titleScreen = new TitleScreen();
     member.clear();
     ChangeScreentoTitle();
