@@ -31,7 +31,6 @@ private:
     // max_slot = 6
     std::array<Character*, max_slot> slot;
     std::array<QGraphicsTextItem*, max_slot> text_slot;
-    //std::string text_string[max_slot];
     QFont font;
 };
 

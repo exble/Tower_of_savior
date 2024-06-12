@@ -20,6 +20,13 @@ class NotifyWindow;
 class SettingButton;
 class DamageBox;
 
+class TitleScreen;
+class tsMouseMove;
+class TeamMouseMove;
+class TeamScreen;
+class ReadyMouseMove;
+class ReadyScreen;
+
 class Game : public QObject {
     Q_OBJECT
 public:
@@ -39,6 +46,15 @@ public:
     CharacterSlot* getCharacterSlot() const;
     void setBackgroundImage(const QString &imagePath);
 
+    TitleScreen *getTitleScreen() const;
+    TeamScreen *getTeamScreen() const;
+    ReadyScreen *getReadyScreen() const;
+    void ChangeScreentoTitle();
+    void ChangeScreentoTeam();
+    void ChangeScreentoReady();
+
+
+
     void showLose();
     void showWin();
     void showSurrender();
@@ -47,6 +63,30 @@ public:
 
     void setPlayerHp(int newPlayerHp);
     void PlayerHpMinus(int minusHp);
+
+public:
+    QPixmap character1 = QPixmap(":/character/dataset/character/ID1.png");
+    QPixmap character2 = QPixmap(":/character/dataset/character/ID2.png");
+    QPixmap character3 = QPixmap(":/character/dataset/character/ID3.png");
+    QPixmap character4 = QPixmap(":/character/dataset/character/ID4.png");
+    QPixmap character5 = QPixmap(":/character/dataset/character/ID5.png");
+    QPixmap member1;
+    QPixmap member2;
+    QPixmap member3;
+    QPixmap member4;
+    QPixmap member5;
+    QPixmap member6;
+    const int Teamsize = 6;
+    QList<int> member;
+    QList<QPixmap> characterType{character1,character2,character3,character4,character5};
+    QList<QGraphicsPixmapItem*> TeamMember;
+    QGraphicsPixmapItem* TeamMember1 = nullptr;
+    QGraphicsPixmapItem* TeamMember2 = nullptr;
+    QGraphicsPixmapItem* TeamMember3 = nullptr;
+    QGraphicsPixmapItem* TeamMember4 = nullptr;
+    QGraphicsPixmapItem* TeamMember5 = nullptr;
+    void setCharacterSlot(CharacterSlot *newCharacterSlot);
+
 private:
     void initBattles();
     void initWindows();
@@ -70,6 +110,13 @@ private:
     int BattleIndex = 0;
     QGraphicsPixmapItem* backgroundItem;
     BGM* bgm;  // Add BGM member
+
+    TitleScreen* titleScreen;
+    tsMouseMove* TsMouseMove;
+    TeamScreen* teamScreen;
+    TeamMouseMove* teamMouseMove;
+    ReadyScreen* readyScreen;
+    ReadyMouseMove* readyMouseMove;
 
 private slots:
     void update();

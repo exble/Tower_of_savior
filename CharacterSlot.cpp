@@ -26,7 +26,7 @@ CharacterSlot::~CharacterSlot()
 
 void CharacterSlot::setCharacter(int index, CharacterType type)
 {
-    assert((index >= 0 || index < max_slot) && "index out of bound");
+    assert((index >= 0 && index < max_slot) && "index out of bound");
     if(slot[index] != nullptr){
         slot[index]->remove();
     }

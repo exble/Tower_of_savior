@@ -11,6 +11,10 @@
 #include "SettingButton.h"
 #include "DamageBox.h"
 #include "BGM.h"  // Include the BGM header file
+#include "TeamScreen.h"
+#include "TitleScreen.h"
+#include "ReadyScreen.h"
+
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QGraphicsScene>
@@ -54,13 +58,6 @@ void Game::start()
 
     // init Character Slot
     characterSlot = new CharacterSlot();
-    characterSlot->setCharacter(0, CharacterType::Fire);
-    characterSlot->setCharacter(1, CharacterType::Water);
-    characterSlot->setCharacter(2, CharacterType::Light);
-    characterSlot->setCharacter(3, CharacterType::Dark);
-    characterSlot->setCharacter(4, CharacterType::Earth);
-    characterSlot->setCharacter(5, CharacterType::Fire);
-    characterSlot->updatePosition();
 
     //init setting button
     sb = new SettingButton();
@@ -82,6 +79,8 @@ void Game::start()
     // init BGM
     bgm = new BGM(this);
     bgm->playBackgroundMusic("qrc:/audio/dataset/audio/BATTLE_ELEMENTAL.wav");
+
+    ChangeScreentoTitle();
 }
 
 void Game::update()
@@ -270,6 +269,11 @@ void Game::initWindows()
 
 }
 
+void Game::setCharacterSlot(CharacterSlot *newCharacterSlot)
+{
+    characterSlot = newCharacterSlot;
+}
+
 void Game::setPlayerHp(int newPlayerHp)
 {
     playerHp = newPlayerHp;
@@ -338,6 +342,10 @@ void Game::Restart()
     loseWindow->hide();
     SurrenderWindow->hide();
     board->setState(RuneBoardState::waiting);
+    titleScreen = new TitleScreen();
+    member.clear();
+    ChangeScreentoTitle();
+
 }
 
 void Game::goBack()
@@ -346,3 +354,53 @@ void Game::goBack()
     board->setState(RuneBoardState::waiting);
 }
 
+
+void Game::ChangeScreentoTitle()
+{
+    //give control to TitleScreen
+    TitleScreen ts;
+    titleScreen = new TitleScreen();
+    view->setScene(ts.titleScene);
+    view->show();
+    TsMouseMove = new tsMouseMove();
+    board->setState(RuneBoardState::inactive);
+}
+
+
+void Game::ChangeScreentoTeam()
+{
+
+    teamScreen = new TeamScreen();
+    TeamScreen tm;
+    view->setScene(tm.teamScene);
+    view->show();
+    teamMouseMove = new class TeamMouseMove();
+    TeamMember = teamScreen->TeamMember;
+}
+
+void Game::ChangeScreentoReady()
+{
+    TeamMember = teamScreen->TeamMember;
+    readyScreen = new ReadyScreen();
+    //readyScreen->member = member;
+    ReadyScreen rd;
+    view->setScene(rd.readyScene);
+    view->show();
+    readyMouseMove = new ReadyMouseMove();
+
+}
+
+TitleScreen*Game::getTitleScreen() const
+{
+    return titleScreen;
+}
+
+TeamScreen*Game::getTeamScreen() const
+{
+    return teamScreen;
+}
+
+ReadyScreen*Game::getReadyScreen() const
+{
+    return readyScreen;
+}

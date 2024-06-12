@@ -1,40 +1,39 @@
 #ifndef TITLESCREEN_H
 #define TITLESCREEN_H
 
-#include "MouseListener.h"
-#include <QGraphicsRectItem>
 #include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsPixmapItem>
-#include <QMouseEvent>
-#include <QObject>
-#include <QTimer>
 
-class TitleScreen : public MouseListener{
+class TitleScreen {
 public:
     TitleScreen();
+    void ScreenChangetoTeam();
     static QGraphicsScene* titleScene;
     static TitleScreen* instance;
-    QGraphicsPixmapItem* background;
-    QRectF bottom;
-    void ScreenChange();
+    bool distructer=0;
+    enum ScreenType {Title , Team , Ready};
+    ScreenType Type;
+    QGraphicsPixmapItem* Titlebackground;
+    QGraphicsPixmapItem* Teambackground;
+    QGraphicsPixmapItem* Readybackground;
+    QPixmap TitlePixmap;
+    QPixmap TeamPixmap ;
+    QPixmap ReadyPixmap ;
+    QPixmap scaledTitlePixmap;
+    QPixmap scaledTeamPixmap ;
+    QPixmap scaledReadyPixmap ;
 
 private:
-    void restart_tick();
-    QPixmap originalPixmap;
-    QPixmap TeamPixmap;
-    QPixmap ReadyPixmap;
-    int Picture = 0;
 
 };
 
-class tsMouseMove : public QGraphicsRectItem{
+class tsMouseMove : public QGraphicsRectItem {
 public:
     tsMouseMove();
+protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 };
-
 
 #endif // TITLESCREEN_H

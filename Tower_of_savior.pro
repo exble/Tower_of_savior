@@ -23,10 +23,12 @@ SOURCES += \
     NotifyWindow.cpp \
     Object.cpp \
     PlayerStatusBar.cpp \
+    ReadyScreen.cpp \
     Rune.cpp \
     RuneBoard.cpp \
     SettingButton.cpp \
     StatusBar.cpp \
+    TeamScreen.cpp \
     TickListener.cpp \
     TitleScreen.cpp \
     main.cpp
@@ -47,10 +49,12 @@ HEADERS += \
     NotifyWindow.h \
     Object.h \
     PlayerStatusBar.h \
+    ReadyScreen.h \
     Rune.h \
     RuneBoard.h \
     SettingButton.h \
     StatusBar.h \
+    TeamScreen.h \
     TickListener.h \
     TitleScreen.h \
     enum.h
