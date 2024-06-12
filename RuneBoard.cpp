@@ -324,19 +324,28 @@ void RuneBoard::handleSpinning()
 
     if(rune_index != dummy_index){
         if(runes[dummy_index.x()][dummy_index.y()]->getState() == RuneState::burning){
-            game->setPlayerHp(game->getPlayerHp() - 30);
+            game->PlayerHpMinus(30);
         }
         std::swap(runes[rune_index.x()][rune_index.y()], runes[dummy_index.x()][dummy_index.y()]);
         updatePosition();
         // 播放音效
         swapSoundEffect.play();
-
-        if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
-            triggerLinking();
-        }
         if(enebleFire){
-            runes[rune_index.x()][rune_index.y()]->setState(RuneState::burning);
+            if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
+                triggerLinking();
+            }
+            else{
+                runes[rune_index.x()][rune_index.y()]->setState(RuneState::burning);
+            }
         }
+        else{
+            if(runes[rune_index.x()][rune_index.y()]->getState() == RuneState::weathered){
+                triggerLinking();
+            }
+        }
+
+
+
     }
 }
 
