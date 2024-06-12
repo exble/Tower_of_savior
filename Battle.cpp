@@ -146,7 +146,7 @@ void Battle::update()
 
     else if(state == BattleState::defending){
 
-        if(monsterIndex == attackList.size()){
+        if(monsterIndex == attackList.size() && !enemyAttacking){
             foreach(Enemy* e, enemyList){
                 if(e->getType() == MonsterType::Duck){
                     transformWeath();
